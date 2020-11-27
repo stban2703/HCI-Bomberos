@@ -4,27 +4,31 @@ class Water {
         this.posY = posY;
         this.width = width;
         this.height = height;
+
         this.initialX = 390;
         this.initialY = 482;
-        this.initialVX = 50 / 10;
-        this.initialVY = -50 / 10;
+
+        // Test values
+        /*this.initialVX = 50 / 10;
+        this.initialVY = -50 / 10;*/
+        
         this.acelerationX = 0;
         this.acelerationY = 0.1; // gravity
         this.time = 0;
-        this.direction = Math.atan(this.initialVY / this.initialVX);
+
+        this.angle = 45.0;
+        this.direction = this.angle / (180 / Math.PI);
+
+        // Test values
+        /*this.direction = Math.atan(this.initialVY / this.initialVX);
         this.angle = Math.abs(this.direction * (180 / Math.PI));
-        console.log(this.direction)
+        this.calDirection = this.angle / (180 / Math.PI);
+        console.log(this.calDirection)*/
     }
 
     paint() {
         fill("#61CDFB");
         ellipse(this.posX, this.posY, this.width, this.heigh);
-    }
-
-    move() {
-        this.posX = 0.5 * this.acelerationX * this.time * this.time + this.initialVX * this.time + this.initialX;
-        this.posY = 0.5 * this.acelerationY * this.time * this.time + this.initialVY * this.time + this.initialY;
-        this.time = this.time + 1;
     }
 
     // Respuesta correcta 1: 12.7
@@ -33,12 +37,22 @@ class Water {
         //let t = 1.79;
         //let v0 = (gravity * t) / (2 * Math.abs(Math.sin(this.direction)));
         let vX = v0 * Math.cos(this.direction);
-        let vY = v0 * Math.sin(this.direction);
+        let vY = (v0 * Math.sin(this.direction)) * -1;
 
         this.posX = this.acelerationX * this.time * this.time + vX * this.time + this.initialX;
         this.posY = this.acelerationY * this.time * this.time + vY * this.time + this.initialY;
         this.time = this.time + 1;
     }
+
+
+    
+
+    // Test move
+    /*move() {
+        this.posX = 0.5 * this.acelerationX * this.time * this.time + this.initialVX * this.time + this.initialX;
+        this.posY = 0.5 * this.acelerationY * this.time * this.time + this.initialVY * this.time + this.initialY;
+        this.time = this.time + 1;
+    }*/
 
     // Version anterior
     /*movement(speed, xSpeed, ySpeed, direction) {
