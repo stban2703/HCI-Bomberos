@@ -1,3 +1,15 @@
 * {
     margin: 0;
 }
+
+input {
+    width: 223px;
+    height: 38px;
+    font-size: 20px;
+    border-radius: 10px;
+    padding: 1px 10px;
+}
+
+input:-ms-input-placeholder {
+    color: lightgray;
+}
