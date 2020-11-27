@@ -32,6 +32,7 @@ class Water {
     }
 
     // Respuesta correcta 1: 12.7
+    // Respuesta correcta 3: 16.5
     calculateInititalV(v0) {
         //let gravity = 10;
         //let t = 1.79;
@@ -45,7 +46,21 @@ class Water {
     }
 
 
+    // Respuesta correcta 2: 48.01
+    // Respuesta correcta 4: 50.19
+    calculateAngle(angle, vX, vY) {
+        let correctAnswer = Math.atan(vY / vX) * (180 / Math.PI);
 
+        let negativeVY = vY * -1;
+        
+        this.posX = this.acelerationX * this.time * this.time + vX * this.time + this.initialX;
+        this.posY = this.acelerationY * this.time * this.time + negativeVY * this.time + this.initialY;
+        this.time = this.time + 1;
+    }
+
+    handleClick() {
+        console.log(this.posX / 100 - this.initialX)
+    }
 
     // Test move
     /*move() {

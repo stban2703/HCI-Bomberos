@@ -10,5 +10,8 @@ function setup() {
 
 function draw() {
     logic.paintScreen();
+}
 
+function mousePressed() {
+    logic.handleClick();
 }
