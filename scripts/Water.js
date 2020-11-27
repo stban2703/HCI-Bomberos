@@ -1,12 +1,12 @@
 class Water {
-    constructor(posX, posY, width, height) {
-        this.posX = posX;
-        this.posY = posY;
+    constructor(initialX, initialY, width, height, angle) {
+        this.posX = 0;
+        this.posY = 0;
         this.width = width;
         this.height = height;
 
-        this.initialX = 390;
-        this.initialY = 482;
+        this.initialX = initialX;
+        this.initialY = initialY;
 
         // Test values
         /*this.initialVX = 50 / 10;
@@ -16,7 +16,7 @@ class Water {
         this.acelerationY = 0.1; // gravity
         this.time = 0;
 
-        this.angle = 45.0;
+        this.angle = angle;
         this.direction = this.angle / (180 / Math.PI);
 
         // Test values
@@ -45,7 +45,7 @@ class Water {
     }
 
 
-    
+
 
     // Test move
     /*move() {

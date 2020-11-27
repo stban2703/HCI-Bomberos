@@ -3,13 +3,26 @@
 }
 
 input {
-    width: 223px;
-    height: 38px;
+    width: 200px;
     font-size: 20px;
     border-radius: 10px;
-    padding: 1px 10px;
+    padding: 10px;
 }
 
 input:-ms-input-placeholder {
     color: lightgray;
+}
+
+button {
+    background-color: #677BC1;
+    border: none;
+    color: white;
+    font-size: 20px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+button:hover {
+    background-color: #3a4779;
+    cursor: pointer;
 }
