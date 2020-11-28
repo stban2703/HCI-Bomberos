@@ -18,6 +18,11 @@ class Life {
         rect(this.posX + 10, this.lifePosY, this.width - 20, this.lifeHeight, 15);
     }
 
+    resetLife() {
+        this.lifePosY = 86;
+        this.lifeHeight = 270;
+    }
+
     loseLife() {
         this.lifeHeight -= 90;
         this.lifePosY += 90;

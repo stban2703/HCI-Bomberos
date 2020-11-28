@@ -1,7 +1,7 @@
 class Water {
     constructor(initialX, initialY, width, height, angle) {
-        this.posX = 0;
-        this.posY = 0;
+        this.posX = initialX;
+        this.posY = initialY;
         this.width = width;
         this.height = height;
 
