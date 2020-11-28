@@ -1,5 +1,5 @@
 class Timer {
-    constructor(posX, posY, fontFamily, fontSize, minutes, tens, unities) {
+    constructor(posX, posY, fontFamily, fontSize, minutes, tens, unities, seconds) {
         this.posX = posX;
         this.posY = posY;
         this.fontFamily = fontFamily;
@@ -8,6 +8,8 @@ class Timer {
         this.tens = tens;
         this.unities = unities;
         this.isRunning = false;
+        this.seconds = seconds;
+        this.total = 0;
     }
 
     paint() {
@@ -21,6 +23,7 @@ class Timer {
 
         if(frameCount%30 == 0 && this.isRunning) {
             this.unities--;
+            this.seconds--;
         }
 
         if(this.unities < 0) {

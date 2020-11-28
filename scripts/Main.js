@@ -2,6 +2,7 @@ let logic;
 let prevScreen;
 let currentScreen;
 let timer;
+let score;
 
 let width = 1024;
 let height = 700;
@@ -12,6 +13,7 @@ let screengameplay;
 let screenWin;
 let screenLoseWater;
 let screenLoseTime;
+let screenFinal;
 let fail;
 let win;
 let life;
@@ -48,7 +50,8 @@ function preload() {
     screengameplay = loadImage("../src/img/screengameplay.jpg");
     screenWin = loadImage("../src/img/pantallavictoria.jpg");
     screenLoseWater = loadImage("../src/img/derrotaagua.jpg");
-    screenLoseTime = loadImage("../src/img/derrotatiempo.jpg")
+    screenLoseTime = loadImage("../src/img/derrotatiempo.jpg");
+    screenFinal = loadImage("../src/img/resume.jpg");
     graphic01 = loadImage("../src/img/grafica01.png");
     graphic02 = loadImage("../src/img/grafica02.png");
     graphic03 = loadImage("../src/img/grafica03.png");
@@ -61,7 +64,8 @@ function preload() {
 function setup() {
     prevScreen = 0;
     currentScreen = 5;
-    timer = new Timer(806, 30, regularFont, 20, 5, 0, 0);
+    timer = new Timer(806, 30, regularFont, 20, 5, 0, 0, 300);
+    score = new Score(450, 30, regularFont, 20, 52);
     win = false;
     fail = false;
     width = 1024;
@@ -137,7 +141,7 @@ function draw() {
             life.paint();
 
             // Lose by wasting water
-            if(life.lifeHeight <= 0) {
+            if (life.lifeHeight <= 0) {
                 fail = false;
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
@@ -146,19 +150,22 @@ function draw() {
                 timer.isRunning = false;
             }
 
+            // Score
+            score.paint();
+
             // Timer
             timer.paint();
             timer.run();
 
             // Lose by time
             timer.isRunning = true;
-            if(timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
+            if (timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
                 prevScreen = 5;
                 currentScreen = 15;
                 water01.isMoving = false;
-                fail =false;
+                fail = false;
                 timer.isRunning = false;
             }
 
@@ -197,6 +204,17 @@ function draw() {
 
                 if (frameCount % 200 == 0) {
                     life.resetLife();
+
+                    // Score
+                    score.addScore(23)
+                    if (timer.minutes >= 2 && timer.tens >= 3 && timer.unities >= 0) {
+                        score.addScore(14);
+                    } else if (timer.seconds <= 150 && timer.seconds > 60) {
+                        score.addScore(7);
+                    } else if(timer.minutes < 1) {
+                        score.addScore(4);
+                    }
+
                     prevScreen = 5;
                     currentScreen = 13;
                     win = false;
@@ -239,18 +257,21 @@ function draw() {
             inputsArray[0].style.display = "none";
             buttonsArray[0].style.display = "none";
 
+            // Score
+            score.paint();
+
             // Timer
             timer.paint();
             timer.run();
 
             // Lose by time
-            if(timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
+            if (timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
                 prevScreen = 5;
                 currentScreen = 15;
                 water01.isMoving = false;
-                fail =false;
+                fail = false;
                 timer.isRunning = false;
             }
 
@@ -279,9 +300,12 @@ function draw() {
             fill(255);
             textFont(regularFont);
             textSize(18);
-            text('El bombero necesita lanzar agua y el chorro de agua tiene una Vx de 8m/s  y una Vy de 9m/s, debes calcular el ángulo de inclinación de la manguera para poder apagar el fuego.', 152, 125, 450);
+            text('El bombero necesita lanzar agua y el chorro de agua tiene una Vx de 9m/s  y una Vy de 10m/s, debes calcular el ángulo de inclinación de la manguera para poder apagar el fuego.', 152, 125, 450);
 
             life.paint();
+
+            // Score
+            score.paint();
 
             // Timer
             timer.paint();
@@ -289,18 +313,18 @@ function draw() {
 
             // Lose by time
             timer.isRunning = true;
-            if(timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
+            if (timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
                 prevScreen = 7;
                 currentScreen = 15;
                 water02.isMoving = false;
-                fail =false;
+                fail = false;
                 timer.isRunning = false;
             }
 
             // Lose by wasting water
-            if(life.lifeHeight <= 0) {
+            if (life.lifeHeight <= 0) {
                 fail = false;
                 life.resetLife();
                 timer.resetTime(5, 0, 0);
@@ -335,6 +359,17 @@ function draw() {
 
                 if (frameCount % 200 == 0) {
                     life.resetLife();
+
+                    // Score
+                    score.addScore(23)
+                    if (timer.minutes >= 2 && timer.tens >= 3 && timer.unities >= 0) {
+                        score.addScore(14);
+                    } else if (timer.seconds <= 150 && timer.seconds > 60) {
+                        score.addScore(7);
+                    } else if(timer.minutes < 1) {
+                        score.addScore(4);
+                    }
+                    
                     prevScreen = 7;
                     timer.resetTime(5, 0, 0);
                     currentScreen = 13;
@@ -377,17 +412,20 @@ function draw() {
             inputsArray[1].style.display = "none";
             buttonsArray[0].style.display = "none";
 
+            // Score
+            score.paint();
+
             // Timer
             timer.paint();
             timer.run();
-            
-            if(timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
+
+            if (timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
                 prevScreen = 7;
                 currentScreen = 15;
                 water02.isMoving = false;
-                fail =false;
+                fail = false;
                 timer.isRunning = false;
             }
 
@@ -421,24 +459,27 @@ function draw() {
             // Life
             life.paint();
 
+            // Score
+            score.paint();
+
             // Timer
             timer.paint();
             timer.run();
 
             // Lose by time
             timer.isRunning = true;
-            if(timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
+            if (timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
                 prevScreen = 9;
                 currentScreen = 15;
                 water03.isMoving = false;
-                fail =false;
+                fail = false;
                 timer.isRunning = false;
             }
 
             // Lose by wasting water
-            if(life.lifeHeight <= 0) {
+            if (life.lifeHeight <= 0) {
                 fail = false;
                 life.resetLife();
                 timer.resetTime(5, 0, 0);
@@ -476,6 +517,17 @@ function draw() {
 
                 if (frameCount % 200 == 0) {
                     life.resetLife();
+
+                    // Score
+                    score.addScore(23)
+                    if (timer.minutes >= 2 && timer.tens >= 3 && timer.unities >= 0) {
+                        score.addScore(14);
+                    } else if (timer.seconds <= 150 && timer.seconds > 60) {
+                        score.addScore(7);
+                    } else if(timer.minutes < 1) {
+                        score.addScore(4);
+                    }
+
                     timer.resetTime(5, 0, 0);
                     prevScreen = 9;
                     currentScreen = 13;
@@ -519,18 +571,21 @@ function draw() {
             inputsArray[2].style.display = "none";
             buttonsArray[0].style.display = "none";
 
+            // Score
+            score.paint();
+
             // Timer
             timer.paint();
             timer.run();
 
             // Lose by time
-            if(timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
+            if (timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
                 prevScreen = 9;
                 currentScreen = 15;
                 water03.isMoving = false;
-                fail =false;
+                fail = false;
                 timer.isRunning = false;
             }
 
@@ -557,24 +612,27 @@ function draw() {
             // Life
             life.paint();
 
+            // Score
+            score.paint();
+
             // Timer
             timer.paint();
             timer.run();
 
             // Lose by time
             timer.isRunning = true;
-            if(timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
+            if (timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
                 prevScreen = 11;
                 currentScreen = 15;
                 water04.isMoving = false;
-                fail =false;
+                fail = false;
                 timer.isRunning = false;
             }
 
             // Lose by wasting water
-            if(life.lifeHeight <= 0) {
+            if (life.lifeHeight <= 0) {
                 fail = false;
                 life.resetLife();
                 timer.resetTime(5, 0, 0);
@@ -618,6 +676,16 @@ function draw() {
 
                 if (frameCount % 200 == 0) {
                     life.resetLife();
+
+                    // Score
+                    score.addScore(23)
+                    if (timer.minutes >= 2 && timer.tens >= 3 && timer.unities >= 0) {
+                        score.addScore(14);
+                    } else if (timer.seconds <= 150 && timer.seconds > 60) {
+                        score.addScore(7);
+                    } else if(timer.minutes < 1) {
+                        score.addScore(4);
+                    }
                     prevScreen = 11;
                     currentScreen = 13;
                     timer.resetTime(5, 0, 0);
@@ -661,18 +729,21 @@ function draw() {
             inputsArray[3].style.display = "none";
             buttonsArray[0].style.display = "none";
 
+            // Score
+            score.paint();
+
             // Timer
             timer.paint();
             timer.run();
 
             // Lose by time
-            if(timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
+            if (timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
                 prevScreen = 11;
                 currentScreen = 15;
                 water04.isMoving = false;
-                fail =false;
+                fail = false;
                 timer.isRunning = false;
             }
 
@@ -693,7 +764,10 @@ function draw() {
             inputsArray[3].style.display = "none";
             buttonsArray[0].style.display = "none";
 
-            if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
+            // Score
+            score.paint();
+
+            if (mouseX >= 492 && mouseX <= 492 + 175 && mouseY >= 464 && mouseY <= 464 + 37.46) {
                 cursor(HAND);
             } else {
                 cursor(ARROW);
@@ -709,7 +783,7 @@ function draw() {
             inputsArray[3].style.display = "none";
             buttonsArray[0].style.display = "none";
 
-            if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
+            if (mouseX >= 424 && mouseX <= 424 + 175 && mouseY >= 464 && mouseY <= 464 + 37.46) {
                 cursor(HAND);
             } else {
                 cursor(ARROW);
@@ -724,7 +798,7 @@ function draw() {
             inputsArray[2].style.display = "none";
             inputsArray[3].style.display = "none";
             buttonsArray[0].style.display = "none";
-            if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
+            if (mouseX >= 424 && mouseX <= 424 + 175 && mouseY >= 464 && mouseY <= 464 + 37.46) {
                 cursor(HAND);
             } else {
                 cursor(ARROW);
@@ -732,8 +806,8 @@ function draw() {
             break;
 
         case 16:
-            // ???
-            background(0);
+            // Resumen
+            image(screenFinal, 0, 0);
             inputsArray[0].style.display = "none";
             inputsArray[1].style.display = "none";
             inputsArray[2].style.display = "none";
@@ -847,7 +921,7 @@ function mousePressed() {
 
         case 13:
             // Victoria
-            if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
+            if (mouseX >= 492 && mouseX <= 492 + 175 && mouseY >= 464 && mouseY <= 464 + 37.46) {
                 if (prevScreen != 11) {
                     currentScreen = prevScreen + 2;
                 } else {
@@ -858,7 +932,7 @@ function mousePressed() {
 
         case 14:
             // Derrota por agua
-            if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
+            if (mouseX >= 424 && mouseX <= 424 + 175 && mouseY >= 464 && mouseY <= 464 + 37.46) {
                 if (prevScreen != 11) {
                     currentScreen = prevScreen + 2;
                 } else {
@@ -869,7 +943,7 @@ function mousePressed() {
 
         case 15:
             // Derrota por tiempo
-            if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
+            if (mouseX >= 424 && mouseX <= 424 + 175 && mouseY >= 464 && mouseY <= 464 + 37.46) {
                 if (prevScreen != 11) {
                     currentScreen = prevScreen + 2;
                 } else {
