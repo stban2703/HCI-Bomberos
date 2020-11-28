@@ -8,6 +8,7 @@ let height = 700;
 let screen01;
 let screengameplay;
 let fail;
+let win;
 let life;
 
 // Images and fonts
@@ -35,6 +36,7 @@ function preload() {
 
 function setup() {
     currentScreen = 5;
+    win = false;
     fail = false;
     width = 1024;
     height = 700;
@@ -48,6 +50,7 @@ function setup() {
     water03 = new Water(140, 482, 30, 30, 25);
     water04 = new Water(140, 482, 30, 30, 0);
 
+    fire = new Fire(755, 195, 171, 140);
 
     // Inputs
     inputsArray = [];
@@ -87,8 +90,11 @@ function draw() {
             image(screengameplay, 0, 0, width, height);
             image(fireman, 0, 425);
 
-            //
+            // Life
             life.paint();
+
+            // Fire
+            fire.paint();
 
             // Text problem
             noStroke();
@@ -101,10 +107,26 @@ function draw() {
 
             water01.calculateInititalV(inputsArray[0].value);
 
+
+            // Collision
+            if(water01.posX >= fire.posX && water01.posX <= fire.posX + fire.width &&
+                water01.posY >= fire.posY && water01.posY <= fire.posY + fire.height
+                 && inputsArray[0].value >= 12 && inputsArray[0].value < 13) {
+                    water01.isMoving = false;
+                    win = true;
+            }
+
             stroke(255);
             line(0, 482, width, 482);
 
             //console.log((this.water01.posY - this.water01.initialY) / 100);
+
+            if (win) {
+                fire.isOver = true;
+                fill(255);
+                textSize(60);
+                text("¡Bien!", 150, 350);
+            }
 
             if (fail) {
                 fill(255);
@@ -192,12 +214,12 @@ function mousePressed() {
             console.log(inputsArray[0].value)
 
             buttonsArray[0].addEventListener('click', function () {
-                if (!water01.isMoving && !fail) {
+                if (!water01.isMoving && !fail && !win) {
                     water01.isMoving = true;
                 }
 
                 if (inputsArray[0].value >= 12 && inputsArray[0].value < 13) {
-                    console.log('ok');
+                    //console.log('ok');
                 }
             });
 
