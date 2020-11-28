@@ -4,6 +4,7 @@ let currentScreen;
 let timer;
 let score;
 let finalTime;
+let totalfireOver;
 
 let width = 1024;
 let height = 700;
@@ -64,7 +65,8 @@ function preload() {
 
 function setup() {
     prevScreen = 0;
-    currentScreen = 16;
+    currentScreen = 5;
+    totalfireOver = 0;
     timer = new Timer(806, 30, regularFont, 20, 5, 0, 0, 300);
     score = new Score(450, 30, regularFont, 20, 52);
     win = false;
@@ -132,6 +134,12 @@ function draw() {
             // Ejercicio 1
             image(screengameplay, 0, 0, width, height);
 
+            // Level
+            fill(255);
+            textFont(boldFont);
+            textSize(20);
+            text("Nivel 1 / 4", 40, 31);
+
             inputsArray[0].style.display = "inline-block";
             inputsArray[1].style.display = "none";
             inputsArray[2].style.display = "none";
@@ -147,7 +155,7 @@ function draw() {
                 fail = false;
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
-                timer.total += 300;
+                timer.total += 300  - timer.seconds;
                 prevScreen = 5;
                 currentScreen = 14;
                 timer.isRunning = false;
@@ -221,6 +229,7 @@ function draw() {
                         score.addScore(4);
                     }
 
+                    totalfireOver++;
                     prevScreen = 5;
                     currentScreen = 13;
                     win = false;
@@ -263,6 +272,12 @@ function draw() {
             inputsArray[0].style.display = "none";
             buttonsArray[0].style.display = "none";
 
+            // Level
+            fill(255);
+            textFont(boldFont);
+            textSize(20);
+            text("Nivel 1 / 4", 40, 31);
+
             // Score
             score.paint();
 
@@ -293,6 +308,12 @@ function draw() {
             // Ejercicio 2
             image(screengameplay, 0, 0, width, height);
             image(fireman, -34, 420);
+
+            // Level
+            fill(255);
+            textFont(boldFont);
+            textSize(20);
+            text("Nivel 2 / 4", 40, 31);
 
             // Inputs buttons
             inputsArray[0].style.display = "none";
@@ -335,7 +356,7 @@ function draw() {
             if (life.lifeHeight <= 0) {
                 fail = false;
                 life.resetLife();
-                timer.total += 300;
+                timer.total += 300  - timer.seconds;
                 timer.resetTime(5, 0, 0);
                 prevScreen = 7;
                 currentScreen = 14;
@@ -381,6 +402,7 @@ function draw() {
                         score.addScore(4);
                     }
 
+                    totalfireOver++;
                     prevScreen = 7;
                     timer.resetTime(5, 0, 0);
                     currentScreen = 13;
@@ -423,6 +445,12 @@ function draw() {
             inputsArray[1].style.display = "none";
             buttonsArray[0].style.display = "none";
 
+            // Level
+            fill(255);
+            textFont(boldFont);
+            textSize(20);
+            text("Nivel 2 / 4", 40, 31);
+
             // Score
             score.paint();
 
@@ -452,6 +480,12 @@ function draw() {
         case 9:
             // Ejercicio 3
             image(screengameplay, 0, 0, width, height);
+
+            // Level
+            fill(255);
+            textFont(boldFont);
+            textSize(20);
+            text("Nivel 3 / 4", 40, 31);
 
             // Inputs buttons
             inputsArray[0].style.display = "none";
@@ -496,7 +530,7 @@ function draw() {
                 fail = false;
                 life.resetLife();
                 timer.resetTime(5, 0, 0);
-                timer.total += 300;
+                timer.total += 300 - timer.seconds;
                 prevScreen = 9;
                 currentScreen = 14;
                 timer.isRunning = false;
@@ -543,7 +577,8 @@ function draw() {
                     } else if (timer.minutes < 1) {
                         score.addScore(4);
                     }
-
+                    
+                    totalfireOver++;
                     timer.resetTime(5, 0, 0);
                     prevScreen = 9;
                     currentScreen = 13;
@@ -587,6 +622,12 @@ function draw() {
             inputsArray[2].style.display = "none";
             buttonsArray[0].style.display = "none";
 
+            // Level
+            fill(255);
+            textFont(boldFont);
+            textSize(20);
+            text("Nivel 3 / 4", 40, 31);
+
             // Score
             score.paint();
 
@@ -617,6 +658,12 @@ function draw() {
         case 11:
             // Ejercicio 4
             image(screengameplay, 0, 0, width, height);
+
+            // Level
+            fill(255);
+            textFont(boldFont);
+            textSize(20);
+            text("Nivel 4 / 4", 40, 31);
 
             // Inputs buttons
             inputsArray[0].style.display = "none";
@@ -654,7 +701,7 @@ function draw() {
                 fail = false;
                 life.resetLife();
                 timer.resetTime(5, 0, 0);
-                timer.total += 300;
+                timer.total += 300  - timer.seconds;
                 prevScreen = 11;
                 currentScreen = 14;
                 timer.isRunning = false;
@@ -707,6 +754,8 @@ function draw() {
                     } else if (timer.minutes < 1) {
                         score.addScore(4);
                     }
+
+                    totalfireOver++;
                     prevScreen = 11;
                     currentScreen = 13;
                     timer.resetTime(5, 0, 0);
@@ -749,6 +798,12 @@ function draw() {
             image(graphic04, 0, 0);
             inputsArray[3].style.display = "none";
             buttonsArray[0].style.display = "none";
+
+            // Level
+            fill(255);
+            textFont(boldFont);
+            textSize(20);
+            text("Nivel 4 / 4", 40, 31);
 
             // Score
             score.paint();
@@ -834,6 +889,12 @@ function draw() {
             textSize(30);
             text(score.value, 490, 352);
             calculateFinalTime();
+
+            // Fire
+            fill(255);
+            textFont(regularFont);
+            textSize(30);
+            text(`${totalfireOver} / 4`, 680, 461);
 
             inputsArray[0].style.display = "none";
             inputsArray[1].style.display = "none";
