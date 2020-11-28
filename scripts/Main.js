@@ -1,5 +1,4 @@
 let logic;
-let isMoving;
 
 function setup() {
     logic = new Logic();

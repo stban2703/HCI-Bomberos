@@ -66,6 +66,7 @@ class Logic {
 
     paintButtons() {
         this.button01.position(384, 230);
+        this.buttonsArray = document.querySelectorAll('button');
     }
 
     paintScreen() {
@@ -132,7 +133,7 @@ class Logic {
                 break;
 
             case 8:
-                // Ejercicio 2
+                // Ejercicio 4
                 image(this.screengameplay, 0, 0, this.width, this.height);
                 image(this.fireman, -250, 425);
 
@@ -155,10 +156,8 @@ class Logic {
         console.log("Y: " + (this.water04.posY - this.water04.initialY) / 100)*/
         switch (this.currentScreen) {
             case 0:
-                image(this.screen01, 0, 0, 1024, 700);
                 break;
             case 1:
-
                 break;
             case 2:
                 break;
@@ -166,71 +165,34 @@ class Logic {
                 break;
             case 5:
                 // Ejercicio 1
-                image(this.screengameplay, 0, 0, this.width, this.height);
-                image(this.fireman, 0, 425);
+                console.log(this.inputsArray[0].value)
+                let correctAnswer = 12;
+                let userAnswer = this.inputsArray[0].value;
 
-                // Text problem
-                noStroke();
-                fill(255);
-                textSize(20);
-                text('El bombero tiene una manguera inclinada en 45º y necesita lanzar agua con velocidad inicial para apagar el fuego ubicado en el edificio y tiene un tiempo de 1.79 segundos Calcule el valor de Vo (velocidad inicial). (g= 10 m/s2).', 152, 101, 450);
+                this.buttonsArray[0].addEventListener('click', function() {
+                    if(userAnswer >= 12 && userAnswer < 13) {
+                        
+                    }
+                });
 
-
-                this.water01.paint();
-                this.water01.calculateInititalV(12.7);
-
-                stroke(255);
-                line(0, 482, this.width, 482);
-
-                //console.log((this.water01.posY - this.water01.initialY) / 100)
                 break;
 
             case 6:
                 // Ejercicio 2
-                image(this.screengameplay, 0, 0, this.width, this.height);
-                image(this.fireman, 0, 425);
 
-                // Text problem
-                noStroke();
-                fill(255);
-                textSize(20);
-                text('El bombero necesita lanzar agua y el chorro de agua tiene una Vx de 8m/s  y una Vy de 9m/s, debes calcular el ángulo de inclinación de la manguera para poder apagar el fuego.', 152, 125, 450);
-
-                this.water02.paint();
-                this.water02.calculateAngle(48, 9, 10);
                 break;
 
             case 7:
                 // Ejercicio 3
-                image(this.screengameplay, 0, 0, this.width, this.height);
-                image(this.fireman, -250, 425);
 
-                // Text problem
-                noStroke();
-                fill(255);
-                textSize(20);
-                text('El bombero tiene una manguera inclinada en 25º y necesita lanzar agua con velocidad inicial para apagar el fuego ubicado en el edificio y tiene un tiempo de 1.4 segundos Calcule el valor de Vo. (velocidad inicial). (g= 10 m/s2).', 152, 101, 450);
-
-                this.water03.paint();
-                this.water03.calculateInititalV(16.5);
                 break;
 
             case 8:
-                // Ejercicio 2
-                image(this.screengameplay, 0, 0, this.width, this.height);
-                image(this.fireman, -250, 425);
+                // Ejercicio 4
 
-                // Text problem
-                noStroke();
-                fill(255);
-                textSize(20);
-                text('El bombero necesita lanzar agua y el chorro de agua tiene una Vx de 8m/s  y una Vy de 9m/s, debes calcular el ángulo de inclinación de la manguera para poder apagar el fuego.', 152, 125, 450);
-
-                this.water04.paint();
-                this.water04.calculateAngle(50, 10, 12);
                 break;
         }
-        
+
 
     }
 }
