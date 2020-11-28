@@ -1,6 +1,7 @@
 let logic;
 let prevScreen;
 let currentScreen;
+let timer;
 
 let width = 1024;
 let height = 700;
@@ -47,6 +48,7 @@ function preload() {
     screengameplay = loadImage("../src/img/screengameplay.jpg");
     screenWin = loadImage("../src/img/pantallavictoria.jpg");
     screenLoseWater = loadImage("../src/img/derrotaagua.jpg");
+    screenLoseTime = loadImage("../src/img/derrotatiempo.jpg")
     graphic01 = loadImage("../src/img/grafica01.png");
     graphic02 = loadImage("../src/img/grafica02.png");
     graphic03 = loadImage("../src/img/grafica03.png");
@@ -59,6 +61,7 @@ function preload() {
 function setup() {
     prevScreen = 0;
     currentScreen = 5;
+    timer = new Timer(806, 30, regularFont, 20, 5, 0, 0);
     win = false;
     fail = false;
     width = 1024;
@@ -136,9 +139,27 @@ function draw() {
             // Lose by wasting water
             if(life.lifeHeight <= 0) {
                 fail = false;
+                timer.resetTime(5, 0, 0);
                 life.resetLife();
                 prevScreen = 5;
                 currentScreen = 14;
+                timer.isRunning = false;
+            }
+
+            // Timer
+            timer.paint();
+            timer.run();
+
+            // Lose by time
+            timer.isRunning = true;
+            if(timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
+                timer.resetTime(5, 0, 0);
+                life.resetLife();
+                prevScreen = 5;
+                currentScreen = 15;
+                water01.isMoving = false;
+                fail =false;
+                timer.isRunning = false;
             }
 
             // Fire
@@ -162,6 +183,7 @@ function draw() {
                 water01.posY >= fire01.posY && water01.posY <= fire01.posY + fire01.height
                 && inputsArray[0].value >= 12 && inputsArray[0].value < 13) {
                 water01.isMoving = false;
+                timer.isRunning = false;
                 win = true;
             }
 
@@ -178,6 +200,7 @@ function draw() {
                     prevScreen = 5;
                     currentScreen = 13;
                     win = false;
+                    timer.resetTime(5, 0, 0);
                 }
             }
 
@@ -216,6 +239,21 @@ function draw() {
             inputsArray[0].style.display = "none";
             buttonsArray[0].style.display = "none";
 
+            // Timer
+            timer.paint();
+            timer.run();
+
+            // Lose by time
+            if(timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
+                timer.resetTime(5, 0, 0);
+                life.resetLife();
+                prevScreen = 5;
+                currentScreen = 15;
+                water01.isMoving = false;
+                fail =false;
+                timer.isRunning = false;
+            }
+
             if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
                 cursor(HAND);
             } else {
@@ -245,13 +283,30 @@ function draw() {
 
             life.paint();
 
+            // Timer
+            timer.paint();
+            timer.run();
+
+            // Lose by time
+            timer.isRunning = true;
+            if(timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
+                timer.resetTime(5, 0, 0);
+                life.resetLife();
+                prevScreen = 7;
+                currentScreen = 15;
+                water02.isMoving = false;
+                fail =false;
+                timer.isRunning = false;
+            }
 
             // Lose by wasting water
             if(life.lifeHeight <= 0) {
                 fail = false;
                 life.resetLife();
+                timer.resetTime(5, 0, 0);
                 prevScreen = 7;
                 currentScreen = 14;
+                timer.isRunning = false;
             }
 
 
@@ -267,6 +322,7 @@ function draw() {
                 && inputsArray[1].value >= 48 && inputsArray[1].value < 49) {
                 water02.isMoving = false;
                 win = true;
+                timer.isRunning = false;
             }
 
             // Win
@@ -280,6 +336,7 @@ function draw() {
                 if (frameCount % 200 == 0) {
                     life.resetLife();
                     prevScreen = 7;
+                    timer.resetTime(5, 0, 0);
                     currentScreen = 13;
                     win = false;
                 }
@@ -319,6 +376,21 @@ function draw() {
             image(graphic02, 0, 0);
             inputsArray[1].style.display = "none";
             buttonsArray[0].style.display = "none";
+
+            // Timer
+            timer.paint();
+            timer.run();
+            
+            if(timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
+                timer.resetTime(5, 0, 0);
+                life.resetLife();
+                prevScreen = 7;
+                currentScreen = 15;
+                water02.isMoving = false;
+                fail =false;
+                timer.isRunning = false;
+            }
+
             // Cursor
             if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
                 cursor(HAND);
@@ -349,13 +421,30 @@ function draw() {
             // Life
             life.paint();
 
+            // Timer
+            timer.paint();
+            timer.run();
+
+            // Lose by time
+            timer.isRunning = true;
+            if(timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
+                timer.resetTime(5, 0, 0);
+                life.resetLife();
+                prevScreen = 9;
+                currentScreen = 15;
+                water03.isMoving = false;
+                fail =false;
+                timer.isRunning = false;
+            }
 
             // Lose by wasting water
             if(life.lifeHeight <= 0) {
                 fail = false;
                 life.resetLife();
+                timer.resetTime(5, 0, 0);
                 prevScreen = 9;
                 currentScreen = 14;
+                timer.isRunning = false;
             }
 
 
@@ -374,6 +463,7 @@ function draw() {
                 && inputsArray[2].value >= 16 && inputsArray[2].value <= 17) {
                 water03.isMoving = false;
                 win = true;
+                timer.isRunning = false;
             }
 
             // Win
@@ -386,6 +476,7 @@ function draw() {
 
                 if (frameCount % 200 == 0) {
                     life.resetLife();
+                    timer.resetTime(5, 0, 0);
                     prevScreen = 9;
                     currentScreen = 13;
                     win = false;
@@ -427,6 +518,22 @@ function draw() {
             image(graphic03, 0, 0);
             inputsArray[2].style.display = "none";
             buttonsArray[0].style.display = "none";
+
+            // Timer
+            timer.paint();
+            timer.run();
+
+            // Lose by time
+            if(timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
+                timer.resetTime(5, 0, 0);
+                life.resetLife();
+                prevScreen = 9;
+                currentScreen = 15;
+                water03.isMoving = false;
+                fail =false;
+                timer.isRunning = false;
+            }
+
             // Cursor
             if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
                 cursor(HAND);
@@ -450,14 +557,31 @@ function draw() {
             // Life
             life.paint();
 
+            // Timer
+            timer.paint();
+            timer.run();
+
+            // Lose by time
+            timer.isRunning = true;
+            if(timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
+                timer.resetTime(5, 0, 0);
+                life.resetLife();
+                prevScreen = 11;
+                currentScreen = 15;
+                water04.isMoving = false;
+                fail =false;
+                timer.isRunning = false;
+            }
+
             // Lose by wasting water
             if(life.lifeHeight <= 0) {
                 fail = false;
                 life.resetLife();
+                timer.resetTime(5, 0, 0);
                 prevScreen = 11;
                 currentScreen = 14;
+                timer.isRunning = false;
             }
-
 
             // Fire
             fire04.paint();
@@ -481,6 +605,7 @@ function draw() {
                 && inputsArray[3].value >= 50 && inputsArray[3].value <= 51) {
                 water04.isMoving = false;
                 win = true;
+                timer.isRunning = false;
             }
 
             // Win
@@ -495,6 +620,7 @@ function draw() {
                     life.resetLife();
                     prevScreen = 11;
                     currentScreen = 13;
+                    timer.resetTime(5, 0, 0);
                     win = false;
                 }
             }
@@ -534,6 +660,22 @@ function draw() {
             image(graphic04, 0, 0);
             inputsArray[3].style.display = "none";
             buttonsArray[0].style.display = "none";
+
+            // Timer
+            timer.paint();
+            timer.run();
+
+            // Lose by time
+            if(timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
+                timer.resetTime(5, 0, 0);
+                life.resetLife();
+                prevScreen = 11;
+                currentScreen = 15;
+                water04.isMoving = false;
+                fail =false;
+                timer.isRunning = false;
+            }
+
             // Cursor
             if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
                 cursor(HAND);
@@ -576,6 +718,12 @@ function draw() {
 
         case 15:
             // Derrota por tiempo
+            image(screenLoseTime, 0, 0);
+            inputsArray[0].style.display = "none";
+            inputsArray[1].style.display = "none";
+            inputsArray[2].style.display = "none";
+            inputsArray[3].style.display = "none";
+            buttonsArray[0].style.display = "none";
             if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
                 cursor(HAND);
             } else {

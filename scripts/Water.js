@@ -68,7 +68,7 @@ class Water {
                 this.posY = this.acelerationY * this.time * this.time + negativeVY * this.time + this.initialY;
                 this.time = this.time + 1;
             } else {
-                console.log('noda')
+                // console.log('noda')
                 this.posX = this.acelerationX * this.time * this.time + wrongVx * this.time + this.initialX;
                 this.posY = this.acelerationY * this.time * this.time + wrongVy * this.time + this.initialY;
                 this.time = this.time + 1;
