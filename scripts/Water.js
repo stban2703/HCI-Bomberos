@@ -62,15 +62,17 @@ class Water {
         let wrongVx = v0 * Math.cos((angle / (180 / Math.PI)));
         let wrongVy = (v0 * Math.sin((angle / (180 / Math.PI)))) * -1;
 
-        if (angle >= correctAnswer && angle < correctAnswer + 1) {
-            this.posX = this.acelerationX * this.time * this.time + vX * this.time + this.initialX;
-            this.posY = this.acelerationY * this.time * this.time + negativeVY * this.time + this.initialY;
-            this.time = this.time + 1;
-        } else {
-            console.log('noda')
-            this.posX = this.acelerationX * this.time * this.time + wrongVx * this.time + this.initialX;
-            this.posY = this.acelerationY * this.time * this.time + wrongVy * this.time + this.initialY;
-            this.time = this.time + 1;
+        if (this.isMoving) {
+            if (angle >= correctAnswer && angle < correctAnswer + 1) {
+                this.posX = this.acelerationX * this.time * this.time + vX * this.time + this.initialX;
+                this.posY = this.acelerationY * this.time * this.time + negativeVY * this.time + this.initialY;
+                this.time = this.time + 1;
+            } else {
+                console.log('noda')
+                this.posX = this.acelerationX * this.time * this.time + wrongVx * this.time + this.initialX;
+                this.posY = this.acelerationY * this.time * this.time + wrongVy * this.time + this.initialY;
+                this.time = this.time + 1;
+            }
         }
     }
 

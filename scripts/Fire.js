@@ -13,7 +13,7 @@ class Fire {
         if (!this.isOver) {
             image(this.image, this.posX, this.posY, this.width, this.height);
         } else {
-            image(this.imageSmoke, 450, this.posY - 30);
+            image(this.imageSmoke, this.posX - 300, this.posY - 30);
         }
     }
 }
