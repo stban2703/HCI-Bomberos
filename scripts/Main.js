@@ -1,4 +1,5 @@
 let logic;
+let prevScreen;
 let currentScreen;
 
 let width = 1024;
@@ -7,6 +8,9 @@ let height = 700;
 // Ingame
 let screen01;
 let screengameplay;
+let screenWin;
+let screenLoseWater;
+let screenLoseTime;
 let fail;
 let win;
 let life;
@@ -41,6 +45,8 @@ let button01;
 function preload() {
     screen01 = loadImage("../src/img/screen01.jpg");
     screengameplay = loadImage("../src/img/screengameplay.jpg");
+    screenWin = loadImage("../src/img/pantallavictoria.jpg");
+    screenLoseWater = loadImage("../src/img/derrotaagua.jpg");
     graphic01 = loadImage("../src/img/grafica01.png");
     graphic02 = loadImage("../src/img/grafica02.png");
     graphic03 = loadImage("../src/img/grafica03.png");
@@ -51,6 +57,7 @@ function preload() {
 }
 
 function setup() {
+    prevScreen = 0;
     currentScreen = 5;
     win = false;
     fail = false;
@@ -126,8 +133,19 @@ function draw() {
             // Life
             life.paint();
 
+            // Lose by wasting water
+            if(life.lifeHeight <= 0) {
+                fail = false;
+                life.resetLife();
+                prevScreen = 5;
+                currentScreen = 14;
+            }
+
             // Fire
             fire01.paint();
+
+            water01.paint();
+            water01.calculateInititalV(inputsArray[0].value);
 
             // Text problem
             noStroke();
@@ -135,9 +153,6 @@ function draw() {
             textFont(regularFont);
             textSize(18);
             text('El bombero tiene una manguera inclinada en 45º y necesita lanzar agua con velocidad inicial para apagar el fuego ubicado en el edificio y tiene un tiempo de 1.79 segundos Calcule el valor de Vo (velocidad inicial). (g= 10 m/s2).', 152, 101, 450);
-
-            water01.paint();
-            water01.calculateInititalV(inputsArray[0].value);
 
             // Bombero
             image(fireman, -34, 420);
@@ -160,7 +175,9 @@ function draw() {
 
                 if (frameCount % 200 == 0) {
                     life.resetLife();
-                    currentScreen = 7;
+                    prevScreen = 5;
+                    currentScreen = 13;
+                    win = false;
                 }
             }
 
@@ -228,10 +245,21 @@ function draw() {
 
             life.paint();
 
+
+            // Lose by wasting water
+            if(life.lifeHeight <= 0) {
+                fail = false;
+                life.resetLife();
+                prevScreen = 7;
+                currentScreen = 14;
+            }
+
+
+            fire02.paint();
+
             water02.paint();
             water02.calculateAngle(inputsArray[1].value, 9, 10);
 
-            fire02.paint();
 
             // Collision
             if (water02.posX >= fire02.posX && water02.posX <= fire02.posX + fire02.width &&
@@ -251,7 +279,9 @@ function draw() {
 
                 if (frameCount % 200 == 0) {
                     life.resetLife();
-                    currentScreen = 9;
+                    prevScreen = 7;
+                    currentScreen = 13;
+                    win = false;
                 }
             }
 
@@ -319,6 +349,16 @@ function draw() {
             // Life
             life.paint();
 
+
+            // Lose by wasting water
+            if(life.lifeHeight <= 0) {
+                fail = false;
+                life.resetLife();
+                prevScreen = 9;
+                currentScreen = 14;
+            }
+
+
             // Fire
             fire03.paint();
 
@@ -346,7 +386,9 @@ function draw() {
 
                 if (frameCount % 200 == 0) {
                     life.resetLife();
-                    currentScreen = 11;
+                    prevScreen = 9;
+                    currentScreen = 13;
+                    win = false;
                 }
             }
 
@@ -408,8 +450,20 @@ function draw() {
             // Life
             life.paint();
 
+            // Lose by wasting water
+            if(life.lifeHeight <= 0) {
+                fail = false;
+                life.resetLife();
+                prevScreen = 11;
+                currentScreen = 14;
+            }
+
+
             // Fire
             fire04.paint();
+
+            water04.paint();
+            water04.calculateAngle(inputsArray[3].value, 10, 12);
 
             // Text problem
             noStroke();
@@ -417,9 +471,6 @@ function draw() {
             textFont(regularFont);
             textSize(18);
             text('El bombero necesita lanzar agua y el chorro de agua tiene una Vx de 10m/s  y una Vy de 12m/s, debes calcular el ángulo de inclinación de la manguera para poder apagar el fuego.', 152, 125, 450);
-
-            water04.paint();
-            water04.calculateAngle(inputsArray[3].value, 10, 12);
 
             image(fireman, -218, 420);
 
@@ -442,7 +493,9 @@ function draw() {
 
                 if (frameCount % 200 == 0) {
                     life.resetLife();
+                    prevScreen = 11;
                     currentScreen = 13;
+                    win = false;
                 }
             }
 
@@ -490,12 +543,53 @@ function draw() {
             break;
 
         case 13:
-            background(255);
+            // Victoria
+            image(screenWin, 0, 0);
             inputsArray[0].style.display = "none";
             inputsArray[1].style.display = "none";
             inputsArray[2].style.display = "none";
             inputsArray[3].style.display = "none";
+            buttonsArray[0].style.display = "none";
 
+            if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
+            break;
+
+        case 14:
+            // Derrota por agua
+            image(screenLoseWater, 0, 0);
+            inputsArray[0].style.display = "none";
+            inputsArray[1].style.display = "none";
+            inputsArray[2].style.display = "none";
+            inputsArray[3].style.display = "none";
+            buttonsArray[0].style.display = "none";
+
+            if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
+            break;
+
+        case 15:
+            // Derrota por tiempo
+            if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
+            break;
+
+        case 16:
+            // ???
+            background(0);
+            inputsArray[0].style.display = "none";
+            inputsArray[1].style.display = "none";
+            inputsArray[2].style.display = "none";
+            inputsArray[3].style.display = "none";
             buttonsArray[0].style.display = "none";
             break;
     }
@@ -600,6 +694,39 @@ function mousePressed() {
             // Close graphics
             if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
                 currentScreen = 11;
+            }
+            break;
+
+        case 13:
+            // Victoria
+            if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
+                if (prevScreen != 11) {
+                    currentScreen = prevScreen + 2;
+                } else {
+                    currentScreen = 16;
+                }
+            }
+            break;
+
+        case 14:
+            // Derrota por agua
+            if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
+                if (prevScreen != 11) {
+                    currentScreen = prevScreen + 2;
+                } else {
+                    currentScreen = 16;
+                }
+            }
+            break;
+
+        case 15:
+            // Derrota por tiempo
+            if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
+                if (prevScreen != 11) {
+                    currentScreen = prevScreen + 2;
+                } else {
+                    currentScreen = 16;
+                }
             }
             break;
     }
