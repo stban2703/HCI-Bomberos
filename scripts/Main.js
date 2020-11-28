@@ -3,6 +3,7 @@ let prevScreen;
 let currentScreen;
 let timer;
 let score;
+let finalTime;
 
 let width = 1024;
 let height = 700;
@@ -63,7 +64,7 @@ function preload() {
 
 function setup() {
     prevScreen = 0;
-    currentScreen = 5;
+    currentScreen = 16;
     timer = new Timer(806, 30, regularFont, 20, 5, 0, 0, 300);
     score = new Score(450, 30, regularFont, 20, 52);
     win = false;
@@ -115,6 +116,7 @@ function setup() {
 }
 
 function draw() {
+    console.log(timer.total);
     switch (currentScreen) {
         case 0:
             image(screen01, 0, 0, 1024, 700);
@@ -145,6 +147,7 @@ function draw() {
                 fail = false;
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
+                timer.total += 300;
                 prevScreen = 5;
                 currentScreen = 14;
                 timer.isRunning = false;
@@ -163,6 +166,7 @@ function draw() {
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
                 prevScreen = 5;
+                timer.total += 300;
                 currentScreen = 15;
                 water01.isMoving = false;
                 fail = false;
@@ -205,13 +209,15 @@ function draw() {
                 if (frameCount % 200 == 0) {
                     life.resetLife();
 
+                    timer.total += 300 - timer.seconds;
+
                     // Score
                     score.addScore(23)
                     if (timer.minutes >= 2 && timer.tens >= 3 && timer.unities >= 0) {
                         score.addScore(14);
                     } else if (timer.seconds <= 150 && timer.seconds > 60) {
                         score.addScore(7);
-                    } else if(timer.minutes < 1) {
+                    } else if (timer.minutes < 1) {
                         score.addScore(4);
                     }
 
@@ -268,6 +274,7 @@ function draw() {
             if (timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
+                timer.total += 300;
                 prevScreen = 5;
                 currentScreen = 15;
                 water01.isMoving = false;
@@ -316,6 +323,7 @@ function draw() {
             if (timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
+                timer.total += 300;
                 prevScreen = 7;
                 currentScreen = 15;
                 water02.isMoving = false;
@@ -327,6 +335,7 @@ function draw() {
             if (life.lifeHeight <= 0) {
                 fail = false;
                 life.resetLife();
+                timer.total += 300;
                 timer.resetTime(5, 0, 0);
                 prevScreen = 7;
                 currentScreen = 14;
@@ -360,16 +369,18 @@ function draw() {
                 if (frameCount % 200 == 0) {
                     life.resetLife();
 
+                    timer.total += 300 - timer.seconds;
+
                     // Score
                     score.addScore(23)
                     if (timer.minutes >= 2 && timer.tens >= 3 && timer.unities >= 0) {
                         score.addScore(14);
                     } else if (timer.seconds <= 150 && timer.seconds > 60) {
                         score.addScore(7);
-                    } else if(timer.minutes < 1) {
+                    } else if (timer.minutes < 1) {
                         score.addScore(4);
                     }
-                    
+
                     prevScreen = 7;
                     timer.resetTime(5, 0, 0);
                     currentScreen = 13;
@@ -422,6 +433,7 @@ function draw() {
             if (timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
+                timer.total += 300;
                 prevScreen = 7;
                 currentScreen = 15;
                 water02.isMoving = false;
@@ -471,6 +483,7 @@ function draw() {
             if (timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
+                timer.total += 300;
                 prevScreen = 9;
                 currentScreen = 15;
                 water03.isMoving = false;
@@ -483,6 +496,7 @@ function draw() {
                 fail = false;
                 life.resetLife();
                 timer.resetTime(5, 0, 0);
+                timer.total += 300;
                 prevScreen = 9;
                 currentScreen = 14;
                 timer.isRunning = false;
@@ -518,13 +532,15 @@ function draw() {
                 if (frameCount % 200 == 0) {
                     life.resetLife();
 
+                    timer.total += 300 - timer.seconds;
+
                     // Score
                     score.addScore(23)
                     if (timer.minutes >= 2 && timer.tens >= 3 && timer.unities >= 0) {
                         score.addScore(14);
                     } else if (timer.seconds <= 150 && timer.seconds > 60) {
                         score.addScore(7);
-                    } else if(timer.minutes < 1) {
+                    } else if (timer.minutes < 1) {
                         score.addScore(4);
                     }
 
@@ -582,6 +598,7 @@ function draw() {
             if (timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
+                timer.total += 300;
                 prevScreen = 9;
                 currentScreen = 15;
                 water03.isMoving = false;
@@ -624,6 +641,7 @@ function draw() {
             if (timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
+                timer.total += 300;
                 prevScreen = 11;
                 currentScreen = 15;
                 water04.isMoving = false;
@@ -636,6 +654,7 @@ function draw() {
                 fail = false;
                 life.resetLife();
                 timer.resetTime(5, 0, 0);
+                timer.total += 300;
                 prevScreen = 11;
                 currentScreen = 14;
                 timer.isRunning = false;
@@ -677,13 +696,15 @@ function draw() {
                 if (frameCount % 200 == 0) {
                     life.resetLife();
 
+                    timer.total += 300 - timer.seconds;
+
                     // Score
                     score.addScore(23)
                     if (timer.minutes >= 2 && timer.tens >= 3 && timer.unities >= 0) {
                         score.addScore(14);
                     } else if (timer.seconds <= 150 && timer.seconds > 60) {
                         score.addScore(7);
-                    } else if(timer.minutes < 1) {
+                    } else if (timer.minutes < 1) {
                         score.addScore(4);
                     }
                     prevScreen = 11;
@@ -740,6 +761,7 @@ function draw() {
             if (timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
+                timer.total += 300;
                 prevScreen = 11;
                 currentScreen = 15;
                 water04.isMoving = false;
@@ -763,9 +785,6 @@ function draw() {
             inputsArray[2].style.display = "none";
             inputsArray[3].style.display = "none";
             buttonsArray[0].style.display = "none";
-
-            // Score
-            score.paint();
 
             if (mouseX >= 492 && mouseX <= 492 + 175 && mouseY >= 464 && mouseY <= 464 + 37.46) {
                 cursor(HAND);
@@ -808,6 +827,14 @@ function draw() {
         case 16:
             // Resumen
             image(screenFinal, 0, 0);
+
+            // Score
+            fill(255);
+            textFont(regularFont);
+            textSize(30);
+            text(score.value, 490, 352);
+            calculateFinalTime();
+
             inputsArray[0].style.display = "none";
             inputsArray[1].style.display = "none";
             inputsArray[2].style.display = "none";
@@ -952,4 +979,15 @@ function mousePressed() {
             }
             break;
     }
+}
+
+
+function calculateFinalTime() {
+
+    let minute = (timer.total / 60).toFixed(1);
+
+    fill(255);
+    textFont(regularFont);
+    textSize(30);
+    text(`${minute} minutos`, 490, 411);
 }

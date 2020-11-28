@@ -41,5 +41,6 @@ class Timer {
         this.minutes = minutes;
         this.tens = tens;
         this.unities = unities;
+        this.seconds = 300;
     };
 }
