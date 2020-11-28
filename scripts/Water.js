@@ -11,7 +11,7 @@ class Water {
         // Test values
         /*this.initialVX = 50 / 10;
         this.initialVY = -50 / 10;*/
-        
+
         this.acelerationX = 0;
         this.acelerationY = 0.1; // gravity
         this.time = 0;
@@ -49,13 +49,25 @@ class Water {
     // Respuesta correcta 2: 48.01
     // Respuesta correcta 4: 50.19
     calculateAngle(angle, vX, vY) {
-        let correctAnswer = Math.atan(vY / vX) * (180 / Math.PI);
+        let calcAnswer = Math.atan(vY / vX) * (180 / Math.PI);
+        let correctAnswer = Math.round(calcAnswer);
 
         let negativeVY = vY * -1;
-        
-        this.posX = this.acelerationX * this.time * this.time + vX * this.time + this.initialX;
-        this.posY = this.acelerationY * this.time * this.time + negativeVY * this.time + this.initialY;
-        this.time = this.time + 1;
+       
+        let v0 = 13.45;
+        let wrongVx = v0 * Math.cos((angle / (180 / Math.PI)));
+        let wrongVy = (v0 * Math.sin((angle / (180 / Math.PI)))) * -1;
+
+        if (angle >= correctAnswer && angle < correctAnswer + 1) {
+            this.posX = this.acelerationX * this.time * this.time + vX * this.time + this.initialX;
+            this.posY = this.acelerationY * this.time * this.time + negativeVY * this.time + this.initialY;
+            this.time = this.time + 1;
+        } else {
+            console.log('noda')
+            this.posX = this.acelerationX * this.time * this.time + wrongVx * this.time + this.initialX;
+            this.posY = this.acelerationY * this.time * this.time + wrongVy * this.time + this.initialY;
+            this.time = this.time + 1;
+        }
     }
 
     handleClick() {
@@ -93,11 +105,11 @@ class Water {
 
         console.log(parabolic);*/
 
-        /*this.posX += (speedX + 50) / 4;
-        this.posY += (10 * Math.sin(speedY)) / 2;
-        speedY += g * t;
+    /*this.posX += (speedX + 50) / 4;
+    this.posY += (10 * Math.sin(speedY)) / 2;
+    speedY += g * t;
 
-    };*/
+};*/
 
 }
 
