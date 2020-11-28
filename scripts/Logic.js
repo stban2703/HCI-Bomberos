@@ -166,11 +166,11 @@ class Logic {
             case 5:
                 // Ejercicio 1
                 console.log(this.inputsArray[0].value)
-                let correctAnswer = 12;
-                let userAnswer = this.inputsArray[0].value;
+                //let correctAnswer = 12;
+                //let userAnswer = this.inputsArray[0].value;
 
                 this.buttonsArray[0].addEventListener('click', function() {
-                    if(userAnswer >= 12 && userAnswer < 13) {
+                    if(this.inputsArray[0].value >= 12 && this.inputsArray[0].value < 13) {
                         
                     }
                 });

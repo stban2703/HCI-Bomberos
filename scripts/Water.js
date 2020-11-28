@@ -19,6 +19,8 @@ class Water {
         this.angle = angle;
         this.direction = this.angle / (180 / Math.PI);
 
+        this.isMoving = false;
+
         // Test values
         /*this.direction = Math.atan(this.initialVY / this.initialVX);
         this.angle = Math.abs(this.direction * (180 / Math.PI));
@@ -27,7 +29,7 @@ class Water {
     }
 
     paint() {
-        fill("#61CDFB");
+        fill("#2FB2EB");
         ellipse(this.posX, this.posY, this.width, this.heigh);
     }
 
@@ -37,12 +39,14 @@ class Water {
         //let gravity = 10;
         //let t = 1.79;
         //let v0 = (gravity * t) / (2 * Math.abs(Math.sin(this.direction)));
-        let vX = v0 * Math.cos(this.direction);
-        let vY = (v0 * Math.sin(this.direction)) * -1;
+        if (this.isMoving) {
+            let vX = v0 * Math.cos(this.direction);
+            let vY = (v0 * Math.sin(this.direction)) * -1;
 
-        this.posX = this.acelerationX * this.time * this.time + vX * this.time + this.initialX;
-        this.posY = this.acelerationY * this.time * this.time + vY * this.time + this.initialY;
-        this.time = this.time + 1;
+            this.posX = this.acelerationX * this.time * this.time + vX * this.time + this.initialX;
+            this.posY = this.acelerationY * this.time * this.time + vY * this.time + this.initialY;
+            this.time = this.time + 1;
+        }
     }
 
 
@@ -53,7 +57,7 @@ class Water {
         let correctAnswer = Math.round(calcAnswer);
 
         let negativeVY = vY * -1;
-       
+
         let v0 = 13.45;
         let wrongVx = v0 * Math.cos((angle / (180 / Math.PI)));
         let wrongVy = (v0 * Math.sin((angle / (180 / Math.PI)))) * -1;
