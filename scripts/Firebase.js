@@ -10,3 +10,6 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+const userRef = db.collection('users');

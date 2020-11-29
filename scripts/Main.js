@@ -13,6 +13,7 @@ let height = 700;
 // Ingame
 let screen01;
 let screenlogin;
+let screenregister;
 let screengameplay;
 let screenWin;
 let screenLoseWater;
@@ -47,7 +48,8 @@ let input01;
 let input02;
 let input03;
 let input04;
-let inputUser;
+let inputUserName;
+let inputRegister;
 
 // Buttons
 let buttonsArray;
@@ -55,6 +57,7 @@ let button01;
 
 function preload() {
     screenlogin = loadImage("../src/img/login.jpg");
+    screenregister = loadImage("../src/img/registro.jpg")
     screen01 = loadImage("../src/img/screen01.jpg");
     screengameplay = loadImage("../src/img/screengameplay.jpg");
     screenWin = loadImage("../src/img/pantallavictoria.jpg");
@@ -64,7 +67,7 @@ function preload() {
     screenlevels = loadImage("../src/img/nivelescompletados.jpg");
 
     blocked = loadImage("../src/img/bloqueado.jpg");
-    
+
     graphic01 = loadImage("../src/img/grafica01.png");
     screenProfile = loadImage("../src/img/perfildummy.jpg")
     graphic02 = loadImage("../src/img/grafica02.png");
@@ -77,7 +80,7 @@ function preload() {
 
 function setup() {
     prevScreen = 0;
-    currentScreen = 1;
+    currentScreen = 0;
     totalfireOver = 0;
     isBlocked = true;
     timer = new Timer(806, 30, regularFont, 20, 5, 0, 0, 300);
@@ -108,13 +111,15 @@ function setup() {
     input03 = createInput();
     input04 = createInput();
     inputUserName = createInput();
+    inputRegister = createInput();
 
     input01.position(150, 230);
     input02.position(150, 230);
     input03.position(150, 230);
     input04.position(150, 230);
 
-    inputUserName.position(332, 245);
+    inputUserName.position(332, 250);
+    inputRegister.position(332, 250);
     inputsArray = document.querySelectorAll('input');
 
     inputsArray.forEach(element => {
@@ -127,6 +132,10 @@ function setup() {
     inputsArray[4].setAttribute('placeholder', "Nombre completo en mayúsculas");
     inputsArray[4].setAttribute('type', 'text');
 
+    inputsArray[5].classList.add("login");
+    inputsArray[5].setAttribute('placeholder', "Nombre completo en mayúsculas");
+    inputsArray[5].setAttribute('type', 'text');
+
     // Buttons
     buttonsArray = [];
     button01 = createButton('Verificar');
@@ -138,17 +147,42 @@ function setup() {
 function draw() {
     switch (currentScreen) {
         case 0:
-            image(screen01, 0, 0);
-            break;
-        case 1:
             image(screenlogin, 0, 0);
             inputsArray[0].style.display = "none";
             inputsArray[1].style.display = "none";
             inputsArray[2].style.display = "none";
             inputsArray[3].style.display = "none";
             inputsArray[4].style.display = "inline-block";
+            inputsArray[5].style.display = "none";
 
             buttonsArray[0].style.display = "none";
+
+            // Cursor
+            if ((mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48)
+                || (mouseX >= 449 && mouseX <= 449 + 126 && mouseY >= 390 && mouseY <= 390 + 24)) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
+            break;
+        case 1:
+            image(screenregister, 0, 0);
+            inputsArray[0].style.display = "none";
+            inputsArray[1].style.display = "none";
+            inputsArray[2].style.display = "none";
+            inputsArray[3].style.display = "none";
+            inputsArray[4].style.display = "none";
+            inputsArray[5].style.display = "inline-block";
+
+            buttonsArray[0].style.display = "none";
+
+            // Cursor
+            if ((mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48)
+                || (mouseX >= 449 && mouseX <= 449 + 126 && mouseY >= 390 && mouseY <= 390 + 24)) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
             break;
         case 2:
             break;
@@ -181,7 +215,7 @@ function draw() {
                 fail = false;
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
-                timer.total += 300  - timer.seconds;
+                timer.total += 300 - timer.seconds;
                 prevScreen = 5;
                 currentScreen = 14;
                 timer.isRunning = false;
@@ -382,7 +416,7 @@ function draw() {
             if (life.lifeHeight <= 0) {
                 fail = false;
                 life.resetLife();
-                timer.total += 300  - timer.seconds;
+                timer.total += 300 - timer.seconds;
                 timer.resetTime(5, 0, 0);
                 prevScreen = 7;
                 currentScreen = 14;
@@ -603,7 +637,7 @@ function draw() {
                     } else if (timer.minutes < 1) {
                         score.addScore(4);
                     }
-                    
+
                     totalfireOver++;
                     timer.resetTime(5, 0, 0);
                     prevScreen = 9;
@@ -727,7 +761,7 @@ function draw() {
                 fail = false;
                 life.resetLife();
                 timer.resetTime(5, 0, 0);
-                timer.total += 300  - timer.seconds;
+                timer.total += 300 - timer.seconds;
                 prevScreen = 11;
                 currentScreen = 14;
                 timer.isRunning = false;
@@ -939,7 +973,7 @@ function draw() {
             // Select levels
             image(screenlevels, 0, 0);
 
-            if(isBlocked) {
+            if (isBlocked) {
                 image(blocked, 318, 280);
             }
 
@@ -983,8 +1017,22 @@ function mousePressed() {
     console.log("Y: " + (this.water04.posY - this.water04.initialY) / 100)*/
     switch (currentScreen) {
         case 0:
+            if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48) {
+                
+            }
+
+            if (mouseX >= 449 && mouseX <= 449 + 126 && mouseY >= 390 && mouseY <= 390 + 24) {
+                currentScreen = 1;
+            }
             break;
         case 1:
+            if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48) {
+                
+            }
+
+            if (mouseX >= 449 && mouseX <= 449 + 126 && mouseY >= 390 && mouseY <= 390 + 24) {
+                currentScreen = 0;
+            }
             break;
         case 2:
             break;
@@ -1119,7 +1167,7 @@ function mousePressed() {
                 currentScreen = 17;
             }
             break;
-        
+
         case 17:
             // Niveles
             if (mouseX >= 932 && mouseX <= 932 + 67 && mouseY >= 20 && mouseY <= 20 + 67) {
