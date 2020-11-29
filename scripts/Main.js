@@ -88,7 +88,7 @@ function setup() {
     currentScreen = 0;
     totalfireOver = 0;
     completedLevels = 4;
-    isBlocked = false;
+    isBlocked = true;
     timer = new Timer(806, 30, regularFont, 20, 5, 0, 0, 300);
     score = new Score(450, 30, regularFont, 20, 52);
     win = false;
@@ -979,6 +979,9 @@ function draw() {
         case 17:
             // Select levels
             image(screenlevels, 0, 0);
+            if (completedLevels >= 2) {
+                isBlocked = false;
+            }
 
             if (isBlocked) {
                 image(blocked, 318, 280);
@@ -1024,11 +1027,23 @@ function draw() {
 
             buttonsArray[0].style.display = "none";
 
+            noStroke();
             fill(255);
             textSize(20);
-            textFont(boldFont);
+            textFont(regularFont);
             text("Nombre: " + currentUser.name, 410, 200);
 
+            fill(255);
+            textSize(40);
+            textFont(regularFont);
+
+            if (currentUser.parabolicScore) {
+                text(currentUser.parabolicScore + " pts", 799, 465);
+            } else {
+                text(0, 799, 465);
+            }
+
+            // text(200 + " pts", 799, 465);
             if (mouseX >= 418 && mouseX <= 418 + 241 && mouseY >= 605 && mouseY <= 605 + 31) {
                 cursor(HAND);
             } else {
@@ -1039,6 +1054,7 @@ function draw() {
 }
 
 function mousePressed() {
+    console.log(mouseX + "\n" + mouseY);
     // Check dX and dY
     /*console.log("X: " + (this.water04.posX - this.water04.initialX) / 100)
     console.log("Y: " + (this.water04.posY - this.water04.initialY) / 100)*/
@@ -1090,7 +1106,7 @@ function mousePressed() {
 
                     if (user == null) {
                         query.set(newUser).then(function () {
-                            currentUser = user;
+                            currentUser = newUser;
                             completedLevels = currentUser.completedLevels;
                             currentScreen = 17;
                         });
@@ -1241,7 +1257,7 @@ function mousePressed() {
                     completedLevels: 2,
                     time: userTime,
                     totalfireOver: totalfireOver,
-                    score: score.value
+                    parabolicScore: score.value
 
                 }).then(function () {
                     completedLevels = 2;
@@ -1259,7 +1275,7 @@ function mousePressed() {
 
             if (mouseX >= 318 && mouseX <= 318 + 194 && mouseY >= 280 && mouseY <= 280 + 194 && !isBlocked) {
                 currentScreen = 5;
-            } else {
+            } else if (mouseX >= 318 && mouseX <= 318 + 194 && mouseY >= 280 && mouseY <= 280 + 194 && isBlocked) {
                 alert("Debes terminar el nivel anterior para seleccionar este.")
             }
             break;
