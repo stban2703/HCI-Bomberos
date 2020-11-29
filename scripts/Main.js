@@ -19,6 +19,11 @@ let screenintro;
 let screenlogin;
 let screenregister;
 
+// Map
+let map1;
+let map2;
+let map2defeat;
+
 // Tutorial caida libre
 let screenlevelone1;
 let screenlevelone2;
@@ -27,6 +32,8 @@ let screenlevelone2;
 let screentutorialparabolic1;
 let screentutorialparabolic2;
 let screentutorialparabolic3;
+let screeninstruction1;
+let screeninstruction2;
 
 // Juego
 let screengameplay;
@@ -81,14 +88,21 @@ function preload() {
     screenregister = loadImage("../src/img/registro.jpg")
     screenintro = loadImage("../src/img/introduccion.jpg");
 
+    // Mapa
+    map1 = loadImage("../src/img/mapa1.jpg");
+    map2 = loadImage("../src/img/mapa2.jpg");
+    map2defeat = loadImage("../src/img/mapa2derrota.jpg");
+
     // Tutorial caida libre
     screenlevelone1 = loadImage("../src/img/tutorialcaidalibre.jpg");
     screenlevelone2 = loadImage("../src/img/tutorialcaidalibre2.jpg");
 
     // Tutorial movmiento parabolico
-    screentutorialparabolic1 = loadImage("../src/img/tutorialparabolico1.jpg")
-    screentutorialparabolic2 = loadImage("../src/img/tutorialparabolico2.jpg")
-    screentutorialparabolic3 = loadImage("../src/img/tutorialparabolico3.jpg")
+    screentutorialparabolic1 = loadImage("../src/img/tutorialparabolico1.jpg");
+    screentutorialparabolic2 = loadImage("../src/img/tutorialparabolico2.jpg");
+    screentutorialparabolic3 = loadImage("../src/img/tutorialparabolico3.jpg");
+    screeninstruction1 = loadImage("../src/img/parabolicoinstrucciones1.jpg");
+    screeninstruction2 = loadImage("../src/img/parabolicoinstrucciones2.jpg");
 
     // Juego
     screengameplay = loadImage("../src/img/screengameplay.jpg");
@@ -181,6 +195,50 @@ function setup() {
 
 function draw() {
     switch (currentScreen) {
+        case -7:
+            // MAPA 2
+            if (totalfireOver >= 3) {
+                image(map2, 0, 0);
+            } else {
+                image(map2defeat, 0, 0);
+            }
+
+            if (mouseX >= 718 && mouseX <= 718 + 175 && mouseY >= 615 && mouseY <= 615 + 37.46) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
+            break;
+        case -6:
+            // MAPA 1
+            image(map1, 0, 0);
+            if (mouseX >= 718 && mouseX <= 718 + 175 && mouseY >= 615 && mouseY <= 615 + 37.46) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
+            break;
+
+        case -5:
+            image(screeninstruction2, 0, 0);
+            // Cursor
+            if (mouseX >= 751 && mouseX <= 751 + 175 && mouseY >= 430 && mouseY <= 430 + 37.46) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
+            break;
+
+        case -4:
+            image(screeninstruction1, 0, 0);
+            // Cursor
+            if (mouseX >= 760 && mouseX <= 760 + 175 && mouseY >= 612 && mouseY <= 612 + 37.46) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
+            break;
+
         case -3:
             image(screenlevelone2, 0, 0);
             if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47) {
@@ -268,7 +326,7 @@ function draw() {
             break;
         case 2:
             image(screentutorialparabolic1, 0, 0);
-            
+
             if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.46) {
                 cursor(HAND);
             } else {
@@ -1057,7 +1115,7 @@ function draw() {
             fill(255);
             textFont(regularFont);
             textSize(30);
-            
+
             text(`${totalfireOver} / 4`, 680, 461);
 
             inputsArray[0].style.display = "none";
@@ -1083,12 +1141,12 @@ function draw() {
                 case 1:
                     image(screenlevelcomplete1, 0, 0);
                     break;
-                
+
                 case 2:
                     image(screenlevelcomplete2, 0, 0);
                     break;
             }
-            
+
             if (completedLevels >= 1) {
                 isBlocked = false;
             }
@@ -1173,6 +1231,31 @@ function mousePressed() {
     /*console.log("X: " + (this.water04.posX - this.water04.initialX) / 100)
     console.log("Y: " + (this.water04.posY - this.water04.initialY) / 100)*/
     switch (currentScreen) {
+        case -7:
+            // MAPA 2
+            if (mouseX >= 718 && mouseX <= 718 + 175 && mouseY >= 615 && mouseY <= 615 + 37.46) {
+                currentScreen = 16;
+            }
+            break;
+        case -6:
+            // MAPA 1
+            if (mouseX >= 718 && mouseX <= 718 + 175 && mouseY >= 615 && mouseY <= 615 + 37.46) {
+                currentScreen = 5;
+            }
+            break;
+
+        case -5:
+            if (mouseX >= 751 && mouseX <= 751 + 175 && mouseY >= 430 && mouseY <= 430 + 37.46) {
+                currentScreen = -6;
+            }
+            break;
+
+        case -4:
+            if (mouseX >= 760 && mouseX <= 760 + 175 && mouseY >= 612 && mouseY <= 612 + 37.46) {
+                currentScreen = -5;
+            }
+            break;
+
         case -3:
             if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && mouseIsPressed && completedLevels < 1) {
                 completedLevels = 1;
@@ -1273,8 +1356,11 @@ function mousePressed() {
             }
             break;
         case 4:
-            if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.46) {
-                //cursor(HAND);
+            if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.46 && completedLevels < 2) {
+                score.value += 52;
+                currentScreen = -4;
+            } else if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.46 && completedLevels >= 2) {
+                currentScreen = -4;
             }
             break;
         case 5:
@@ -1384,7 +1470,7 @@ function mousePressed() {
                 if (prevScreen != 11) {
                     currentScreen = prevScreen + 2;
                 } else {
-                    currentScreen = 16;
+                    currentScreen = -7;
                 }
             }
             break;
@@ -1395,7 +1481,7 @@ function mousePressed() {
                 if (prevScreen != 11) {
                     currentScreen = prevScreen + 2;
                 } else {
-                    currentScreen = 16;
+                    currentScreen = -7;
                 }
             }
             break;
@@ -1406,7 +1492,7 @@ function mousePressed() {
                 if (prevScreen != 11) {
                     currentScreen = prevScreen + 2;
                 } else {
-                    currentScreen = 16;
+                    currentScreen = -7;
                 }
             }
             break;
@@ -1453,7 +1539,7 @@ function mousePressed() {
                 score = new Score(450, 30, regularFont, 20, 0);
                 totalfireOver = 0;
 
-                if(currentUser.parabolicScore) {
+                if (currentUser.parabolicScore) {
                     score.value = currentUser.parabolicScore
                 };
 
@@ -1486,7 +1572,7 @@ function mousePressed() {
 
                 // pantalla
                 currentScreen = 2;
-               
+
             } else if (mouseX >= 323 && mouseX <= 323 + 189 && mouseY >= 288 && mouseY <= 288 + 189 && isBlocked) {
                 alert("Debes terminar el nivel anterior para seleccionar este.");
             }
