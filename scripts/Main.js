@@ -12,6 +12,7 @@ let height = 700;
 
 // Ingame
 let screen01;
+let screenlogin;
 let screengameplay;
 let screenWin;
 let screenLoseWater;
@@ -46,12 +47,14 @@ let input01;
 let input02;
 let input03;
 let input04;
+let inputUser;
 
 // Buttons
 let buttonsArray;
 let button01;
 
 function preload() {
+    screenlogin = loadImage("../src/img/login.jpg");
     screen01 = loadImage("../src/img/screen01.jpg");
     screengameplay = loadImage("../src/img/screengameplay.jpg");
     screenWin = loadImage("../src/img/pantallavictoria.jpg");
@@ -74,7 +77,7 @@ function preload() {
 
 function setup() {
     prevScreen = 0;
-    currentScreen = 5;
+    currentScreen = 1;
     totalfireOver = 0;
     isBlocked = true;
     timer = new Timer(806, 30, regularFont, 20, 5, 0, 0, 300);
@@ -104,12 +107,14 @@ function setup() {
     input02 = createInput();
     input03 = createInput();
     input04 = createInput();
+    inputUserName = createInput();
 
     input01.position(150, 230);
     input02.position(150, 230);
     input03.position(150, 230);
     input04.position(150, 230);
 
+    inputUserName.position(332, 245);
     inputsArray = document.querySelectorAll('input');
 
     inputsArray.forEach(element => {
@@ -118,6 +123,9 @@ function setup() {
         element.style.display = "none";
     });
 
+    inputsArray[4].classList.add("login");
+    inputsArray[4].setAttribute('placeholder', "Nombre completo en mayúsculas");
+    inputsArray[4].setAttribute('type', 'text');
 
     // Buttons
     buttonsArray = [];
@@ -130,13 +138,23 @@ function setup() {
 function draw() {
     switch (currentScreen) {
         case 0:
-            image(screen01, 0, 0, 1024, 700);
+            image(screen01, 0, 0);
             break;
         case 1:
+            image(screenlogin, 0, 0);
+            inputsArray[0].style.display = "none";
+            inputsArray[1].style.display = "none";
+            inputsArray[2].style.display = "none";
+            inputsArray[3].style.display = "none";
+            inputsArray[4].style.display = "inline-block";
+
+            buttonsArray[0].style.display = "none";
             break;
         case 2:
             break;
         case 3:
+            break;
+        case 4:
             break;
         case 5:
             // Ejercicio 1
