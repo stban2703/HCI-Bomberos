@@ -14,9 +14,14 @@ let width = 1024;
 let height = 700;
 
 // Ingame
-let screen01;
+let stroke;
+let screenintro;
 let screenlogin;
 let screenregister;
+// Tutorial caida libre
+let screenlevelone1;
+let screenlevelone2;
+// Juego
 let screengameplay;
 let screenWin;
 let screenLoseWater;
@@ -61,9 +66,17 @@ let buttonsArray;
 let button01;
 
 function preload() {
+    stroke = loadImage("../src/img/stroke.png");
+
     screenlogin = loadImage("../src/img/login.jpg");
     screenregister = loadImage("../src/img/registro.jpg")
-    screen01 = loadImage("../src/img/screen01.jpg");
+    screenintro = loadImage("../src/img/introduccion.jpg");
+
+    // Tutorial caida libre
+    screenlevelone1 = loadImage("../src/img/tutorialcaidalibre.jpg");
+    screenlevelone2 = loadImage("../src/img/tutorialcaidalibre2.jpg")
+
+    // Juego
     screengameplay = loadImage("../src/img/screengameplay.jpg");
     screenWin = loadImage("../src/img/pantallavictoria.jpg");
     screenLoseWater = loadImage("../src/img/derrotaagua.jpg");
@@ -85,9 +98,9 @@ function preload() {
 
 function setup() {
     prevScreen = 0;
-    currentScreen = 0;
+    currentScreen = -1;
     totalfireOver = 0;
-    completedLevels = 4;
+    completedLevels = 0;
     isBlocked = true;
     timer = new Timer(806, 30, regularFont, 20, 5, 0, 0, 300);
     score = new Score(450, 30, regularFont, 20, 52);
@@ -95,7 +108,6 @@ function setup() {
     fail = false;
     width = 1024;
     height = 700;
-    currentUser;
 
     createCanvas(width, height);
 
@@ -153,6 +165,53 @@ function setup() {
 
 function draw() {
     switch (currentScreen) {
+        case -3:
+            image(screenlevelone2, 0, 0);
+            if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
+
+            break;
+
+        case -2:
+            image(screenlevelone1, 0, 0);
+
+            if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
+            break;
+
+        case -1:
+            image(screenintro, 0, 0);
+            inputsArray[0].style.display = "none";
+            inputsArray[1].style.display = "none";
+            inputsArray[2].style.display = "none";
+            inputsArray[3].style.display = "none";
+            inputsArray[4].style.display = "none";
+            inputsArray[5].style.display = "none";
+            buttonsArray[0].style.display = "none";
+
+            if ((mouseX >= 390 && mouseX <= 390 + 277 && mouseY >= 405 && mouseY <= 405 + 59)
+                || (mouseX >= 390 && mouseX <= 390 + 277 && mouseY >= 490 && mouseY <= 490 + 59)) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
+
+            if (mouseX >= 390 && mouseX <= 390 + 277 && mouseY >= 405 && mouseY <= 405 + 59 && mouseIsPressed) {
+                currentScreen = 0;
+            }
+
+            if (mouseX >= 390 && mouseX <= 390 + 277 && mouseY >= 490 && mouseY <= 490 + 59 && mouseIsPressed) {
+                //currentScreen = 0;
+                alert("Very soon")
+            }
+
+            break;
         case 0:
             image(screenlogin, 0, 0);
             inputsArray[0].style.display = "none";
@@ -961,6 +1020,7 @@ function draw() {
             fill(255);
             textFont(regularFont);
             textSize(30);
+            
             text(`${totalfireOver} / 4`, 680, 461);
 
             inputsArray[0].style.display = "none";
@@ -979,21 +1039,16 @@ function draw() {
         case 17:
             // Select levels
             image(screenlevels, 0, 0);
-            if (completedLevels >= 2) {
+            if (completedLevels >= 1) {
                 isBlocked = false;
             }
 
             if (isBlocked) {
-                image(blocked, 318, 280);
+                //image(blocked, 318, 280);
             }
 
             // Completed levels
-            for (let i = 0; i < completedLevels; i++) {
-                stroke(0, 255, 0);
-                strokeWeight(2);
-                noFill();
-                rect(97 + (i * 221), 280, 194, 194);
-            }
+            image(stroke, 113 + (202 * completedLevels), 280);
 
             inputsArray[0].style.display = "none";
             inputsArray[1].style.display = "none";
@@ -1006,8 +1061,8 @@ function draw() {
 
 
             if ((mouseX >= 932 && mouseX <= 932 + 67 && mouseY >= 20 && mouseY <= 20 + 67)
-                || (mouseX >= 97 && mouseX <= 97 + 194 && mouseY >= 280 && mouseY <= 280 + 194)
-                || (mouseX >= 318 && mouseX <= 318 + 194 && mouseY >= 280 && mouseY <= 280 + 194)) {
+                || (mouseX >= 121 && mouseX <= 121 + 189 && mouseY >= 288 && mouseY <= 288 + 189)
+                || (mouseX >= 323 && mouseX <= 323 + 189 && mouseY >= 288 && mouseY <= 288 + 189)) {
                 cursor(HAND);
             } else {
                 cursor(ARROW);
@@ -1027,23 +1082,23 @@ function draw() {
 
             buttonsArray[0].style.display = "none";
 
+            textAlign(CENTER, CENTER)
             noStroke();
             fill(255);
-            textSize(20);
+            textSize(25);
             textFont(regularFont);
-            text("Nombre: " + currentUser.name, 410, 200);
+            text("Nombre: " + currentUser.name, width / 2, 150);
 
+            textAlign(LEFT, BASELINE)
             fill(255);
-            textSize(40);
+            textSize(35);
             textFont(regularFont);
 
             if (currentUser.parabolicScore) {
-                text(currentUser.parabolicScore + " pts", 799, 465);
+                text(currentUser.parabolicScore + " pts", 799, 475);
             } else {
-                text(0, 799, 465);
+                text(0 + " pts", 770, 475);
             }
-
-            // text(200 + " pts", 799, 465);
             if (mouseX >= 418 && mouseX <= 418 + 241 && mouseY >= 605 && mouseY <= 605 + 31) {
                 cursor(HAND);
             } else {
@@ -1054,11 +1109,34 @@ function draw() {
 }
 
 function mousePressed() {
-    console.log(mouseX + "\n" + mouseY);
     // Check dX and dY
     /*console.log("X: " + (this.water04.posX - this.water04.initialX) / 100)
     console.log("Y: " + (this.water04.posY - this.water04.initialY) / 100)*/
     switch (currentScreen) {
+        case -3:
+            if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && mouseIsPressed && completedLevels < 1) {
+                completedLevels = 1;
+                isBlocked = false;
+                userRef.doc(currentUser.id).update({
+                    completedLevels: 1,
+                    freefallScore: 50
+
+                }).then(function () {
+                    completedLevels = 1;
+                    currentScreen = 17;
+                    console.log("Actualizado")
+                });
+            } else if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && mouseIsPressed && completedLevels >= 1) {
+                currentScreen = 17;
+                console.log("Otra vez");
+            }
+            break;
+
+        case -2:
+            if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && mouseIsPressed) {
+                currentScreen = -3;
+            }
+            break;
         case 0:
             // LOGIN
             if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48 && inputsArray[4].value.length > 0) {
@@ -1132,6 +1210,9 @@ function mousePressed() {
             buttonsArray[0].addEventListener('click', function () {
                 if (!water01.isMoving && !fail && !win) {
                     water01.isMoving = true;
+                    water02.isMoving = false;
+                    water03.isMoving = false;
+                    water04.isMoving = false;
                 }
             });
 
@@ -1154,7 +1235,10 @@ function mousePressed() {
             // Ejercicio 2
             buttonsArray[0].addEventListener('click', function () {
                 if (!water02.isMoving && !fail && !win) {
+                    water01.isMoving = false;
                     water02.isMoving = true;
+                    water03.isMoving = false;
+                    water04.isMoving = false;
                 }
             });
 
@@ -1176,7 +1260,10 @@ function mousePressed() {
             // Ejercicio 3
             buttonsArray[0].addEventListener('click', function () {
                 if (!water03.isMoving && !fail && !win) {
+                    water01.isMoving = false;
+                    water02.isMoving = false;
                     water03.isMoving = true;
+                    water04.isMoving = false;
                 }
             });
 
@@ -1198,6 +1285,9 @@ function mousePressed() {
             // Ejercicio 4
             buttonsArray[0].addEventListener('click', function () {
                 if (!water04.isMoving && !fail && !win) {
+                    water01.isMoving = false;
+                    water02.isMoving = false;
+                    water03.isMoving = false;
                     water04.isMoving = true;
                 }
             });
@@ -1251,7 +1341,7 @@ function mousePressed() {
 
         case 16:
             // Resumen
-            if (mouseX >= 481 && mouseX <= 481 + 175 && mouseY >= 501 && mouseY <= 501 + 37.46) {
+            if (mouseX >= 481 && mouseX <= 481 + 175 && mouseY >= 501 && mouseY <= 501 + 37.46 && completedLevels < 2) {
                 isBlocked = false;
                 userRef.doc(currentUser.id).update({
                     completedLevels: 2,
@@ -1264,6 +1354,9 @@ function mousePressed() {
                     currentScreen = 17;
                     console.log("Actualizado")
                 });
+            } else if (mouseX >= 481 && mouseX <= 481 + 175 && mouseY >= 501 && mouseY <= 501 + 37.46 && completedLevels >= 2) {
+                currentScreen = 17;
+                console.log("Otra vez")
             }
             break;
 
@@ -1273,11 +1366,63 @@ function mousePressed() {
                 currentScreen = 18;
             }
 
-            if (mouseX >= 318 && mouseX <= 318 + 194 && mouseY >= 280 && mouseY <= 280 + 194 && !isBlocked) {
+            // Caida libre
+            if (mouseX >= 121 && mouseX <= 121 + 189 && mouseY >= 288 && mouseY <= 288 + 189) {
+                currentScreen = -2;
+            }
+
+            // Movimiento parabolico
+            if (mouseX >= 323 && mouseX <= 323 + 189 && mouseY >= 288 && mouseY <= 288 + 189 && !isBlocked) {
+                // Reset game
+                prevScreen = 0;
+                timer = new Timer(806, 30, regularFont, 20, 5, 0, 0, 300);
+
+                score = new Score(450, 30, regularFont, 20, 0);
+                totalfireOver = 0;
+
+                if(currentUser.parabolicScore) {
+                    score.value = currentUser.parabolicScore
+                };
+
+                inputsArray[0].value = "";
+                inputsArray[1].value = "";
+                inputsArray[2].value = "";
+                inputsArray[3].value = "";
+
+                win = false;
+                fail = false;
+                life = new Life();
+                water01 = new Water(360, 476, 30, 30, 45);
+                water02 = new Water(360, 476, 30, 30, 0);
+                water03 = new Water(170, 478, 30, 30, 25);
+                water04 = new Water(170, 478, 30, 30, 0);
+
+                water01.isMoving = false;
+                water02.isMoving = false;
+                water03.isMoving = false;
+                water04.isMoving = false;
+
+                fire01 = new Fire(755, 195, 171, 140);
+                fire02 = new Fire(851, 189, 171, 140);
+                fire03 = new Fire(638, 264, 171, 140);
+                fire04 = new Fire(630, 47, 171, 140);
+                fire01.isOver = false;
+                fire02.isOver = false;
+                fire03.isOver = false;
+                fire04.isOver = false;
+
+                // pantalla
+                currentScreen = 5;
+               
+            } else if (mouseX >= 323 && mouseX <= 323 + 189 && mouseY >= 288 && mouseY <= 288 + 189 && isBlocked) {
+                alert("Debes terminar el nivel anterior para seleccionar este.");
+            }
+
+            /*if (mouseX >= 318 && mouseX <= 318 + 194 && mouseY >= 280 && mouseY <= 280 + 194 && !isBlocked) {
                 currentScreen = 5;
             } else if (mouseX >= 318 && mouseX <= 318 + 194 && mouseY >= 280 && mouseY <= 280 + 194 && isBlocked) {
                 alert("Debes terminar el nivel anterior para seleccionar este.")
-            }
+            }*/
             break;
 
         case 18:

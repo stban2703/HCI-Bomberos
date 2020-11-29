@@ -15,6 +15,8 @@ class Score {
     }
 
     addScore(points) {
-        this.value += points;
+        if (!currentUser.parabolicScore) {
+            this.value += points;
+        }
     }
 }
