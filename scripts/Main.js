@@ -1055,7 +1055,6 @@ function mousePressed() {
 
                     if (user != null) {
                         currentUser = user;
-                        console.log(currentUser);
                         completedLevels = currentUser.completedLevels;
                         currentScreen = 17;
                     } else {
@@ -1064,7 +1063,7 @@ function mousePressed() {
                 });
 
             } else if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48 && inputsArray[4].value.length == 0) {
-                alert("Completa los campos.");
+                alert("Completa el campo.");
             }
 
             if (mouseX >= 449 && mouseX <= 449 + 126 && mouseY >= 390 && mouseY <= 390 + 24) {
@@ -1074,52 +1073,35 @@ function mousePressed() {
 
         case 1:
             // REGISTRO
-            if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48 && inputsArray[5] != null) {
+            if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48 && inputsArray[5].value.length > 0) {
                 let newUser = {
                     id: inputsArray[5].value.toLowerCase().replace(" ", ""),
                     name: inputsArray[5].value,
                     completedLevels: 0
                 }
 
+                let user;
 
+                let query = userRef.doc(newUser.id);
 
+                query.get().then(function (querySnapshot) {
+                    user = querySnapshot.data()
+                    console.log(user);
 
-                /*userRef.get().then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        const obj = doc.data();
-                        obj.id = doc.id;
-                        userList.push(obj)
-                        //console.log(`${doc.id} =>${doc.data()}`);
-                    });
-
-                    if (userList.length != 0) {
-                        for (let i = 0; i < userList.length; i++) {
-                            if (newUser.id.includes(userList[i].id)) {
-                                alert("El usuario ya existe.");
-                                break;
-                            } else {
-                                userRef.doc(newUser.id).set(newUser).then(function () {
-                                    console.log("Document written");
-                                    currentUser = newUser;
-                                    completedLevels = newUser.completedLevels;
-                                    currentScreen = 17;
-                                    console.log(currentUser);
-                                });
-                                break
-                            }
-                        }
-                    } else {
-                        userRef.doc(newUser.id).set(newUser).then(function () {
-                            console.log("Document written");
-                            currentUser = newUser;
-                            completedLevels = newUser.completedLevels;
+                    if (user == null) {
+                        query.set(newUser).then(function () {
+                            currentUser = user;
+                            completedLevels = currentUser.completedLevels;
                             currentScreen = 17;
-                            console.log(currentUser);
-                        })
+                        });
+                    } else {
+                        alert("El usuario ya existe.");
                     }
-
-                });*/
+                });
+            } else if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48 && inputsArray[5].value.length == 0) {
+                alert("Completa el campo.");
             }
+
 
             if (mouseX >= 449 && mouseX <= 449 + 126 && mouseY >= 390 && mouseY <= 390 + 24) {
                 currentScreen = 0;
