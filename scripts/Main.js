@@ -1,11 +1,14 @@
 let logic;
 let prevScreen;
 let currentScreen;
+let currentUser;
+let userTime;
 let timer;
 let score;
 let finalTime;
 let totalfireOver;
 let isBlocked;
+let userId;
 
 let width = 1024;
 let height = 700;
@@ -51,6 +54,8 @@ let input04;
 let inputUserName;
 let inputRegister;
 
+let completedLevels;
+
 // Buttons
 let buttonsArray;
 let button01;
@@ -82,13 +87,15 @@ function setup() {
     prevScreen = 0;
     currentScreen = 0;
     totalfireOver = 0;
-    isBlocked = true;
+    completedLevels = 4;
+    isBlocked = false;
     timer = new Timer(806, 30, regularFont, 20, 5, 0, 0, 300);
     score = new Score(450, 30, regularFont, 20, 52);
     win = false;
     fail = false;
     width = 1024;
     height = 700;
+    currentUser;
 
     createCanvas(width, height);
 
@@ -977,14 +984,27 @@ function draw() {
                 image(blocked, 318, 280);
             }
 
+            // Completed levels
+            for (let i = 0; i < completedLevels; i++) {
+                stroke(0, 255, 0);
+                strokeWeight(2);
+                noFill();
+                rect(97 + (i * 221), 280, 194, 194);
+            }
+
             inputsArray[0].style.display = "none";
             inputsArray[1].style.display = "none";
             inputsArray[2].style.display = "none";
             inputsArray[3].style.display = "none";
+            inputsArray[4].style.display = "none";
+            inputsArray[5].style.display = "none";
 
             buttonsArray[0].style.display = "none";
 
-            if (mouseX >= 932 && mouseX <= 932 + 67 && mouseY >= 20 && mouseY <= 20 + 67) {
+
+            if ((mouseX >= 932 && mouseX <= 932 + 67 && mouseY >= 20 && mouseY <= 20 + 67)
+                || (mouseX >= 97 && mouseX <= 97 + 194 && mouseY >= 280 && mouseY <= 280 + 194)
+                || (mouseX >= 318 && mouseX <= 318 + 194 && mouseY >= 280 && mouseY <= 280 + 194)) {
                 cursor(HAND);
             } else {
                 cursor(ARROW);
@@ -999,8 +1019,15 @@ function draw() {
             inputsArray[1].style.display = "none";
             inputsArray[2].style.display = "none";
             inputsArray[3].style.display = "none";
+            inputsArray[4].style.display = "none";
+            inputsArray[5].style.display = "none";
 
             buttonsArray[0].style.display = "none";
+
+            fill(255);
+            textSize(20);
+            textFont(boldFont);
+            text("Nombre: " + currentUser.name, 410, 200);
 
             if (mouseX >= 418 && mouseX <= 418 + 241 && mouseY >= 605 && mouseY <= 605 + 31) {
                 cursor(HAND);
@@ -1017,17 +1044,81 @@ function mousePressed() {
     console.log("Y: " + (this.water04.posY - this.water04.initialY) / 100)*/
     switch (currentScreen) {
         case 0:
-            if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48) {
-                
+            // LOGIN
+            if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48 && inputsArray[4].value.length > 0) {
+                let user;
+                let query = userRef.doc(inputsArray[4].value.toLowerCase().replace(" ", ""));
+
+                query.get().then(function (querySnapshot) {
+                    user = querySnapshot.data()
+                    console.log(user);
+
+                    if (user != null) {
+                        currentUser = user;
+                        console.log(currentUser);
+                        completedLevels = currentUser.completedLevels;
+                        currentScreen = 17;
+                    } else {
+                        alert("El usuario no existe.");
+                    }
+                });
+
+            } else if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48 && inputsArray[4].value.length == 0) {
+                alert("Completa los campos.");
             }
 
             if (mouseX >= 449 && mouseX <= 449 + 126 && mouseY >= 390 && mouseY <= 390 + 24) {
                 currentScreen = 1;
             }
             break;
+
         case 1:
-            if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48) {
-                
+            // REGISTRO
+            if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48 && inputsArray[5] != null) {
+                let newUser = {
+                    id: inputsArray[5].value.toLowerCase().replace(" ", ""),
+                    name: inputsArray[5].value,
+                    completedLevels: 0
+                }
+
+
+
+
+                /*userRef.get().then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        const obj = doc.data();
+                        obj.id = doc.id;
+                        userList.push(obj)
+                        //console.log(`${doc.id} =>${doc.data()}`);
+                    });
+
+                    if (userList.length != 0) {
+                        for (let i = 0; i < userList.length; i++) {
+                            if (newUser.id.includes(userList[i].id)) {
+                                alert("El usuario ya existe.");
+                                break;
+                            } else {
+                                userRef.doc(newUser.id).set(newUser).then(function () {
+                                    console.log("Document written");
+                                    currentUser = newUser;
+                                    completedLevels = newUser.completedLevels;
+                                    currentScreen = 17;
+                                    console.log(currentUser);
+                                });
+                                break
+                            }
+                        }
+                    } else {
+                        userRef.doc(newUser.id).set(newUser).then(function () {
+                            console.log("Document written");
+                            currentUser = newUser;
+                            completedLevels = newUser.completedLevels;
+                            currentScreen = 17;
+                            console.log(currentUser);
+                        })
+                    }
+
+                });*/
             }
 
             if (mouseX >= 449 && mouseX <= 449 + 126 && mouseY >= 390 && mouseY <= 390 + 24) {
@@ -1164,7 +1255,17 @@ function mousePressed() {
             // Resumen
             if (mouseX >= 481 && mouseX <= 481 + 175 && mouseY >= 501 && mouseY <= 501 + 37.46) {
                 isBlocked = false;
-                currentScreen = 17;
+                userRef.doc(currentUser.id).update({
+                    completedLevels: 2,
+                    time: userTime,
+                    totalfireOver: totalfireOver,
+                    score: score.value
+
+                }).then(function () {
+                    completedLevels = 2;
+                    currentScreen = 17;
+                    console.log("Actualizado")
+                });
             }
             break;
 
@@ -1172,6 +1273,12 @@ function mousePressed() {
             // Niveles
             if (mouseX >= 932 && mouseX <= 932 + 67 && mouseY >= 20 && mouseY <= 20 + 67) {
                 currentScreen = 18;
+            }
+
+            if (mouseX >= 318 && mouseX <= 318 + 194 && mouseY >= 280 && mouseY <= 280 + 194 && !isBlocked) {
+                currentScreen = 5;
+            } else {
+                alert("Debes terminar el nivel anterior para seleccionar este.")
             }
             break;
 
@@ -1187,10 +1294,10 @@ function mousePressed() {
 
 function calculateFinalTime() {
 
-    let minute = (timer.total / 60).toFixed(1);
+    userTime = (timer.total / 60).toFixed(1);
 
     fill(255);
     textFont(regularFont);
     textSize(30);
-    text(`${minute} minutos`, 490, 411);
+    text(`${userTime} minutos`, 490, 411);
 }
