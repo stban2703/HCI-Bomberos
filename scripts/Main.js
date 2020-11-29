@@ -5,6 +5,7 @@ let timer;
 let score;
 let finalTime;
 let totalfireOver;
+let isBlocked;
 
 let width = 1024;
 let height = 700;
@@ -16,6 +17,9 @@ let screenWin;
 let screenLoseWater;
 let screenLoseTime;
 let screenFinal;
+let screenlevels;
+let screenProfile;
+let blocked;
 let fail;
 let win;
 let life;
@@ -54,7 +58,12 @@ function preload() {
     screenLoseWater = loadImage("../src/img/derrotaagua.jpg");
     screenLoseTime = loadImage("../src/img/derrotatiempo.jpg");
     screenFinal = loadImage("../src/img/resume.jpg");
+    screenlevels = loadImage("../src/img/nivelescompletados.jpg");
+
+    blocked = loadImage("../src/img/bloqueado.jpg");
+    
     graphic01 = loadImage("../src/img/grafica01.png");
+    screenProfile = loadImage("../src/img/perfildummy.jpg")
     graphic02 = loadImage("../src/img/grafica02.png");
     graphic03 = loadImage("../src/img/grafica03.png");
     graphic04 = loadImage("../src/img/grafica04.png");
@@ -67,6 +76,7 @@ function setup() {
     prevScreen = 0;
     currentScreen = 5;
     totalfireOver = 0;
+    isBlocked = true;
     timer = new Timer(806, 30, regularFont, 20, 5, 0, 0, 300);
     score = new Score(450, 30, regularFont, 20, 52);
     win = false;
@@ -118,13 +128,11 @@ function setup() {
 }
 
 function draw() {
-    console.log(timer.total);
     switch (currentScreen) {
         case 0:
             image(screen01, 0, 0, 1024, 700);
             break;
         case 1:
-
             break;
         case 2:
             break;
@@ -901,6 +909,52 @@ function draw() {
             inputsArray[2].style.display = "none";
             inputsArray[3].style.display = "none";
             buttonsArray[0].style.display = "none";
+
+            if (mouseX >= 481 && mouseX <= 481 + 175 && mouseY >= 501 && mouseY <= 501 + 37.46) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
+            break;
+
+        case 17:
+            // Select levels
+            image(screenlevels, 0, 0);
+
+            if(isBlocked) {
+                image(blocked, 318, 280);
+            }
+
+            inputsArray[0].style.display = "none";
+            inputsArray[1].style.display = "none";
+            inputsArray[2].style.display = "none";
+            inputsArray[3].style.display = "none";
+
+            buttonsArray[0].style.display = "none";
+
+            if (mouseX >= 932 && mouseX <= 932 + 67 && mouseY >= 20 && mouseY <= 20 + 67) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
+            break;
+
+        case 18:
+            // Profile
+            image(screenProfile, 0, 0);
+
+            inputsArray[0].style.display = "none";
+            inputsArray[1].style.display = "none";
+            inputsArray[2].style.display = "none";
+            inputsArray[3].style.display = "none";
+
+            buttonsArray[0].style.display = "none";
+
+            if (mouseX >= 418 && mouseX <= 418 + 241 && mouseY >= 605 && mouseY <= 605 + 31) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
             break;
     }
 }
@@ -1037,6 +1091,28 @@ function mousePressed() {
                 } else {
                     currentScreen = 16;
                 }
+            }
+            break;
+
+        case 16:
+            // Resumen
+            if (mouseX >= 481 && mouseX <= 481 + 175 && mouseY >= 501 && mouseY <= 501 + 37.46) {
+                isBlocked = false;
+                currentScreen = 17;
+            }
+            break;
+        
+        case 17:
+            // Niveles
+            if (mouseX >= 932 && mouseX <= 932 + 67 && mouseY >= 20 && mouseY <= 20 + 67) {
+                currentScreen = 18;
+            }
+            break;
+
+        case 18:
+            // Perfil
+            if (mouseX >= 418 && mouseX <= 418 + 241 && mouseY >= 605 && mouseY <= 605 + 31) {
+                currentScreen = 17;
             }
             break;
     }
