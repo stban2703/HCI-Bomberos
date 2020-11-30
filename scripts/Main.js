@@ -6,6 +6,7 @@ let currentInstructScreen;
 let currentTutorialFfScreen;
 let currentTutorialPmScreen;
 
+let newUser;
 let currentUser;
 let userTime;
 let timer;
@@ -23,10 +24,13 @@ let topArray;
 
 // Ingame
 let stroke;
+let avatarStroke;
+let selectedAvatar;
 let screenintro;
 let screenlogin;
 let screenregister;
 let screentop;
+let screenAvatar;
 
 // Map
 let map1;
@@ -115,12 +119,14 @@ let button01;
 
 function preload() {
     stroke = loadImage("./src/img/stroke.png");
+    avatarStroke = loadImage("./src/img/strokeavatar.png");
 
     // Inicio
     screenlogin = loadImage("./src/img/login.jpg");
     screenregister = loadImage("./src/img/registro.jpg")
     screenintro = loadImage("./src/img/introduccion.jpg");
     screentop = loadImage("./src/img/topjugadores.jpg");
+    screenAvatar = loadImage("./src/img/avatar.jpg");
 
     // Mapa
     map1 = loadImage("./src/img/mapa1.jpg");
@@ -185,6 +191,7 @@ function setup() {
     trail = [];
     prevScreen = 0;
     currentScreen = -1;
+    selectedAvatar = null;
 
     currentInstructScreen = 0;
     currentTutorialFfScreen = -1;
@@ -394,10 +401,10 @@ function draw() {
             if (totalfireOver >= 4) {
                 image(map2, 0, 0);
 
-            } else if (totalfireOver < 4 && totalfireOver >= 3){
+            } else if (totalfireOver < 4 && totalfireOver >= 3) {
                 image(map2medium, 0, 0);
 
-            } else if (totalfireOver < 3){
+            } else if (totalfireOver < 3) {
                 image(map2defeat, 0, 0);
             }
 
@@ -527,6 +534,7 @@ function draw() {
             }
             break;
         case 1:
+            // Registro
             image(screenregister, 0, 0);
             inputsArray[0].style.display = "none";
             inputsArray[1].style.display = "none";
@@ -1548,6 +1556,30 @@ function draw() {
                 cursor(ARROW);
             }
             break;
+
+        case 19:
+            inputsArray[0].style.display = "none";
+            inputsArray[1].style.display = "none";
+            inputsArray[2].style.display = "none";
+            inputsArray[3].style.display = "none";
+            inputsArray[4].style.display = "none";
+            inputsArray[5].style.display = "none";
+            
+            image(screenAvatar, 0, 0);
+            if (selectedAvatar == "mujer") {
+                image(avatarStroke, 312, 238);
+            } else if (selectedAvatar == "hombre") {
+                image(avatarStroke, 547, 238);
+            }
+
+            if ((mouseX >= 312 && mouseX <= 312 + 172 && mouseY >= 238 && mouseY <= 238 + 172)
+                || (mouseX >= 547 && mouseX <= 547 + 172 && mouseY >= 238 && mouseY <= 238 + 172)
+                || (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 504 && mouseY <= 504 + 48)) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
+            break;
     }
 }
 
@@ -1743,14 +1775,15 @@ function mousePressed() {
         case 1:
             // REGISTRO
             if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48 && inputsArray[5].value.length > 0) {
-                let newUser = {
+                newUser = {
                     id: inputsArray[5].value.toLowerCase().replace(/\s/g, ""),
                     name: inputsArray[5].value,
                     completedLevels: 0,
                     parabolicScore: 0,
                     freefallScore: 0,
                     totalScore: 0,
-                    time: "0"
+                    time: "0",
+                    genre: ""
                 }
 
                 let user;
@@ -1762,15 +1795,14 @@ function mousePressed() {
                     console.log(user);
 
                     if (user == null) {
-                        query.set(newUser).then(function () {
-                            currentUser = newUser;
-                            completedLevels = currentUser.completedLevels;
-                            currentScreen = 17;
-                        });
+                        currentUser = newUser;
+                        completedLevels = currentUser.completedLevels;
+                        currentScreen = 19;
+
                     } else {
                         alert("El usuario ya existe.");
                     }
-                });
+                })
             } else if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48 && inputsArray[5].value.length == 0) {
                 alert("Completa el campo.");
             }
@@ -2065,6 +2097,31 @@ function mousePressed() {
             // Perfil
             if (mouseX >= 418 && mouseX <= 418 + 241 && mouseY >= 605 && mouseY <= 605 + 31) {
                 currentScreen = 17;
+            }
+            break;
+
+        case 19:
+            if (mouseX >= 312 && mouseX <= 312 + 172 && mouseY >= 238 && mouseY <= 238 + 172) {
+                selectedAvatar = "mujer";
+            }
+
+            if (mouseX >= 547 && mouseX <= 547 + 172 && mouseY >= 238 && mouseY <= 238 + 172) {
+                selectedAvatar = "hombre";
+            }
+
+            if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 504 && mouseY <= 504 + 48 && selectedAvatar != null) {
+                newUser.genre = selectedAvatar;
+
+
+                let query = userRef.doc(newUser.id);
+
+                query.set(newUser).then(function () {
+                    currentUser = newUser;
+                    completedLevels = currentUser.completedLevels;
+                    currentScreen = 17;
+                });
+            } else if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 504 && mouseY <= 504 + 48 && selectedAvatar == null) {
+                alert("Selecciona un avatar.");
             }
             break;
     }
