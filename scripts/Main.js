@@ -1281,7 +1281,8 @@ function draw() {
 
             if ((mouseX >= 932 && mouseX <= 932 + 67 && mouseY >= 20 && mouseY <= 20 + 67)
                 || (mouseX >= 121 && mouseX <= 121 + 189 && mouseY >= 288 && mouseY <= 288 + 189)
-                || (mouseX >= 323 && mouseX <= 323 + 189 && mouseY >= 288 && mouseY <= 288 + 189)) {
+                || (mouseX >= 323 && mouseX <= 323 + 189 && mouseY >= 288 && mouseY <= 288 + 189)
+                || (mouseX >= 774 && mouseX <= 774 + 133 && mouseY >= 78 && mouseY <= 78 + 24)) {
                 cursor(HAND);
             } else {
                 cursor(ARROW);
@@ -1682,6 +1683,11 @@ function mousePressed() {
             // Caida libre
             if (mouseX >= 121 && mouseX <= 121 + 189 && mouseY >= 288 && mouseY <= 288 + 189) {
                 currentScreen = -2;
+            }
+
+            // Cerrar sesion
+            if (mouseX >= 774 && mouseX <= 774 + 133 && mouseY >= 78 && mouseY <= 78 + 24) {
+                window.location.reload();
             }
 
             // Movimiento parabolico
