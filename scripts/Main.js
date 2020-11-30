@@ -34,10 +34,11 @@ let screenlevelone1;
 let screenlevelone2;
 let screenlevelone3;
 
-// Tutorial
+// Tutorial animacion parabolico
 let screentutorialparabolic1;
 let screentutorialparabolic2;
 let screentutorialparabolic3;
+
 let screeninstruction1;
 let screeninstruction2;
 
@@ -107,9 +108,10 @@ function preload() {
     screenlevelone3 = loadImage("./src/img/tutocaidalibre3.png")
 
     // Tutorial movmiento parabolico
-    screentutorialparabolic1 = loadImage("./src/img/tutorialparabolico1.jpg");
-    screentutorialparabolic2 = loadImage("./src/img/tutorialparabolico2.jpg");
+    //screentutorialparabolic1 = loadImage("./src/img/tutorialparabolico1.jpg");
+    //screentutorialparabolic2 = loadImage("./src/img/tutorialparabolico2.jpg");
     screentutorialparabolic3 = loadImage("./src/img/tutorialparabolico3.jpg");
+
     screeninstruction1 = loadImage("./src/img/parabolicoinstrucciones1.jpg");
     screeninstruction2 = loadImage("./src/img/parabolicoinstrucciones2.jpg");
 
@@ -212,6 +214,12 @@ function setup() {
     screenlevelone1.position(0, 0);
     screenlevelone2.position(0, 0);
 
+    screentutorialparabolic1 = createImg("./src/animated/tutoparabolico1.gif");
+    screentutorialparabolic2 = createImg("./src/animated/tutoparabolico2.gif");
+
+    screentutorialparabolic1.position(0, 0);
+    screentutorialparabolic2.position(0, 0);
+
     // Animation array
     animationArray = document.querySelectorAll("img");
 
@@ -221,6 +229,7 @@ function setup() {
 }
 
 function draw() {
+    console.log(currentScreen)
     switch (currentScreen) {
         case -9:
             // Tutorial caida libre 3
@@ -305,8 +314,9 @@ function draw() {
             break;
 
         case -5:
-            // Tutorial movimiento parabolico 2
+            // Instruccion movimiento parabolico 2
             image(screeninstruction2, 0, 0);
+            
             // Cursor
             if (mouseX >= 751 && mouseX <= 751 + 175 && mouseY >= 430 && mouseY <= 430 + 37.46) {
                 cursor(HAND);
@@ -316,8 +326,9 @@ function draw() {
             break;
 
         case -4:
-            // Tutorial movimiento parabolico 1
+            // Instruccion movimiento parabolico 1
             image(screeninstruction1, 0, 0);
+            
             // Cursor
             if (mouseX >= 760 && mouseX <= 760 + 175 && mouseY >= 612 && mouseY <= 612 + 37.46) {
                 cursor(HAND);
@@ -411,8 +422,13 @@ function draw() {
             }
             break;
         case 2:
-            image(screentutorialparabolic1, 0, 0);
-
+            // Tutorial parabolico 1
+            // image(screentutorialparabolic1, 0, 0);
+            animationArray[0].style.display = "none";
+            animationArray[1].style.display = "none";
+            animationArray[2].style.display = "block";
+            animationArray[3].style.display = "none";
+            
             if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.46) {
                 cursor(HAND);
             } else {
@@ -420,7 +436,12 @@ function draw() {
             }
             break;
         case 3:
-            image(screentutorialparabolic2, 0, 0);
+            // Tutorial parabolico 2
+            //image(screentutorialparabolic2, 0, 0);
+            animationArray[0].style.display = "none";
+            animationArray[1].style.display = "none";
+            animationArray[2].style.display = "none";
+            animationArray[3].style.display = "block";
 
             if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.46) {
                 cursor(HAND);
@@ -430,6 +451,10 @@ function draw() {
             break;
         case 4:
             image(screentutorialparabolic3, 0, 0);
+            animationArray[0].style.display = "none";
+            animationArray[1].style.display = "none";
+            animationArray[2].style.display = "none";
+            animationArray[3].style.display = "none";
 
             if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.46) {
                 cursor(HAND);
