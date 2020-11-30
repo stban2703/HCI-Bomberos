@@ -229,7 +229,7 @@ function setup() {
 }
 
 function draw() {
-    console.log(currentScreen)
+    //console.log(currentScreen)
     switch (currentScreen) {
         case -9:
             // Tutorial caida libre 3
