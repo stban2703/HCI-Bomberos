@@ -192,11 +192,11 @@ function setup() {
     });
 
     inputsArray[4].classList.add("login");
-    inputsArray[4].setAttribute('placeholder', "Nombre completo en mayúsculas");
+    inputsArray[4].setAttribute('placeholder', "Primer nombre y ambos apellidos");
     inputsArray[4].setAttribute('type', 'text');
 
     inputsArray[5].classList.add("login");
-    inputsArray[5].setAttribute('placeholder', "Nombre completo en mayúsculas");
+    inputsArray[5].setAttribute('placeholder', "Primer nombre y ambos apellidos");
     inputsArray[5].setAttribute('type', 'text');
 
     // Buttons
@@ -316,7 +316,7 @@ function draw() {
         case -5:
             // Instruccion movimiento parabolico 2
             image(screeninstruction2, 0, 0);
-            
+
             // Cursor
             if (mouseX >= 751 && mouseX <= 751 + 175 && mouseY >= 430 && mouseY <= 430 + 37.46) {
                 cursor(HAND);
