@@ -1,6 +1,7 @@
 let logic;
 let prevScreen;
 let currentScreen;
+let currentInstructScreen;
 let currentUser;
 let userTime;
 let timer;
@@ -41,6 +42,10 @@ let screentutorialparabolic3;
 
 let screeninstruction1;
 let screeninstruction2;
+let screeninstruction3;
+let screeninstruction4;
+let screeninstruction5;
+let screeninstruction6;
 
 // Juego
 let screengameplay;
@@ -117,6 +122,10 @@ function preload() {
 
     screeninstruction1 = loadImage("./src/img/parabolicoinstrucciones1.jpg");
     screeninstruction2 = loadImage("./src/img/parabolicoinstrucciones2.jpg");
+    screeninstruction3 = loadImage("./src/img/parabolicoinstrucciones3.jpg");
+    screeninstruction4 = loadImage("./src/img/parabolicoinstrucciones4.jpg");
+    screeninstruction5 = loadImage("./src/img/parabolicoinstrucciones5.jpg");
+    screeninstruction6 = loadImage("./src/img/parabolicoinstrucciones6.jpg");
 
     // Juego
     screengameplay = loadImage("./src/img/screengameplay.jpg");
@@ -144,6 +153,7 @@ function setup() {
     trail = [];
     prevScreen = 0;
     currentScreen = -1;
+    currentInstructScreen = 0;
     totalfireOver = 0;
     completedLevels = 0;
     isBlocked = true;
@@ -318,11 +328,31 @@ function draw() {
             break;
 
         case -5:
-            // Instruccion movimiento parabolico 2
-            image(screeninstruction2, 0, 0);
+            switch (currentInstructScreen) {
+                case 0:
+                    // Instruccion movimiento parabolico 2
+                    image(screeninstruction2, 0, 0);
+                    break;
+                case 1:
+                    // Instruccion movimiento parabolico 3
+                    image(screeninstruction3, 0, 0);
+                    break;
+                case 2:
+                    // Instruccion movimiento parabolico 4
+                    image(screeninstruction4, 0, 0);
+                    break;
+                case 3:
+                    // Instruccion movimiento parabolico 5
+                    image(screeninstruction5, 0, 0);
+                    break;
+                case 4:
+                    // Instruccion movimiento parabolico 6
+                    image(screeninstruction6, 0, 0);
+                    break;
+            }
 
             // Cursor
-            if (mouseX >= 751 && mouseX <= 751 + 175 && mouseY >= 430 && mouseY <= 430 + 37.46) {
+            if (mouseX >= 760 && mouseX <= 760 + 175 && mouseY >= 612 && mouseY <= 612 + 37.46) {
                 cursor(HAND);
             } else {
                 cursor(ARROW);
@@ -332,9 +362,9 @@ function draw() {
         case -4:
             // Instruccion movimiento parabolico 1
             image(screeninstruction1, 0, 0);
-            
+
             // Cursor
-            if (mouseX >= 760 && mouseX <= 760 + 175 && mouseY >= 612 && mouseY <= 612 + 37.46) {
+            if (mouseX >= 751 && mouseX <= 751 + 175 && mouseY >= 430 && mouseY <= 430 + 37.46) {
                 cursor(HAND);
             } else {
                 cursor(ARROW);
@@ -432,7 +462,7 @@ function draw() {
             animationArray[1].style.display = "none";
             animationArray[2].style.display = "block";
             animationArray[3].style.display = "none";
-            
+
             if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.46) {
                 cursor(HAND);
             } else {
@@ -526,11 +556,11 @@ function draw() {
             water01.calculateInititalV(inputsArray[0].value);
 
             // Water trail
-            if(water01.isMoving) {
+            if (water01.isMoving) {
                 trail.push(new Particle(water01.posX, water01.posY, water01.width, water01.height));
             }
 
-            for(let i = 0; i < trail.length; i++) {
+            for (let i = 0; i < trail.length; i++) {
                 trail[i].paint();
             }
 
@@ -722,11 +752,11 @@ function draw() {
             water02.calculateAngle(inputsArray[1].value, 9, 10);
 
             // Water trail
-            if(water02.isMoving) {
+            if (water02.isMoving) {
                 trail.push(new Particle(water02.posX, water02.posY, water02.width, water02.height));
             }
 
-            for(let i = 0; i < trail.length; i++) {
+            for (let i = 0; i < trail.length; i++) {
                 trail[i].paint();
             }
 
@@ -910,11 +940,11 @@ function draw() {
             water03.calculateInititalV(inputsArray[2].value);
 
             // Water trail
-            if(water03.isMoving) {
+            if (water03.isMoving) {
                 trail.push(new Particle(water03.posX, water03.posY, water03.width, water03.height));
             }
 
-            for(let i = 0; i < trail.length; i++) {
+            for (let i = 0; i < trail.length; i++) {
                 trail[i].paint();
             }
 
@@ -1094,14 +1124,14 @@ function draw() {
             water04.calculateAngle(inputsArray[3].value, 10, 12);
 
             // Water trail
-            if(water04.isMoving) {
+            if (water04.isMoving) {
                 trail.push(new Particle(water04.posX, water04.posY, water04.width, water04.height));
             }
 
-            for(let i = 0; i < trail.length; i++) {
+            for (let i = 0; i < trail.length; i++) {
                 trail[i].paint();
             }
-            
+
 
             // Text problem
             noStroke();
@@ -1447,14 +1477,53 @@ function mousePressed() {
             break;
 
         case -5:
-            // 
-            if (mouseX >= 751 && mouseX <= 751 + 175 && mouseY >= 430 && mouseY <= 430 + 37.46) {
-                currentScreen = -6;
+            // Instrucciones parabolico
+            switch (currentInstructScreen) {
+                case 0:
+                    // Instruccion movimiento parabolico 2
+                    if (mouseX >= 760 && mouseX <= 760 + 175 && mouseY >= 612 && mouseY <= 612 + 37.46) {
+                        currentInstructScreen = 1;
+                    }
+                    break;
+                case 1:
+                    // Instruccion movimiento parabolico 3
+                    if (mouseX >= 760 && mouseX <= 760 + 175 && mouseY >= 612 && mouseY <= 612 + 37.46) {
+                        currentInstructScreen = 2;
+                    }
+                    break;
+                case 2:
+                    // Instruccion movimiento parabolico 4
+                    if (mouseX >= 760 && mouseX <= 760 + 175 && mouseY >= 612 && mouseY <= 612 + 37.46) {
+                        currentInstructScreen = 3;
+                    }
+                    break;
+                case 3:
+                    // Instruccion movimiento parabolico 5
+                    if (mouseX >= 760 && mouseX <= 760 + 175 && mouseY >= 612 && mouseY <= 612 + 37.46) {
+                        currentInstructScreen = 4;
+                    }
+                    break;
+
+                case 4:
+                    // Instruccion movimiento parabolico 6
+                    if (mouseX >= 760 && mouseX <= 760 + 175 && mouseY >= 612 && mouseY <= 612 + 37.46) {
+                        currentInstructScreen = 0;
+                        currentScreen = -6;
+                    }
+                    break;
+
+                /*case 5:
+                    // Instruccion movimiento parabolico 6
+                    // Cursor
+                    if (mouseX >= 760 && mouseX <= 760 + 175 && mouseY >= 612 && mouseY <= 612 + 37.46) {
+                        currentScreen = -6;
+                    }
+                    break;*/
             }
             break;
 
         case -4:
-            if (mouseX >= 760 && mouseX <= 760 + 175 && mouseY >= 612 && mouseY <= 612 + 37.46) {
+            if (mouseX >= 751 && mouseX <= 751 + 175 && mouseY >= 430 && mouseY <= 430 + 37.46) {
                 currentScreen = -5;
             }
             break;
