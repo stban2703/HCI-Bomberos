@@ -57,9 +57,8 @@ let fail;
 let win;
 let life;
 
-// Images and fonts
-let fireman;
-let water01;
+// Water and fire
+let trail;
 let water02;
 let water03;
 let water04;
@@ -67,6 +66,10 @@ let fire01;
 let fire02;
 let fire03;
 let fire04;
+
+// Images and fonts
+let fireman;
+let water01;
 let graphic01;
 let graphic02;
 let graphic03;
@@ -138,6 +141,7 @@ function preload() {
 }
 
 function setup() {
+    trail = [];
     prevScreen = 0;
     currentScreen = -1;
     totalfireOver = 0;
@@ -491,6 +495,7 @@ function draw() {
                 prevScreen = 5;
                 currentScreen = 14;
                 timer.isRunning = false;
+                trail = [];
             }
 
             // Score
@@ -506,6 +511,7 @@ function draw() {
                 timer.resetTime(5, 0, 0);
                 life.resetLife();
                 prevScreen = 5;
+                trail = [];
                 timer.total += 300;
                 currentScreen = 15;
                 water01.isMoving = false;
@@ -518,6 +524,15 @@ function draw() {
 
             water01.paint();
             water01.calculateInititalV(inputsArray[0].value);
+
+            // Water trail
+            if(water01.isMoving) {
+                trail.push(new Particle(water01.posX, water01.posY, water01.width, water01.height));
+            }
+
+            for(let i = 0; i < trail.length; i++) {
+                trail[i].paint();
+            }
 
             // Text problem
             noStroke();
@@ -548,7 +563,7 @@ function draw() {
 
                 if (frameCount % 200 == 0) {
                     life.resetLife();
-
+                    trail = [];
                     timer.total += 300 - timer.seconds;
 
                     // Score
@@ -577,6 +592,7 @@ function draw() {
                 text("¡Fallaste!", 150, 350);
                 if (frameCount % 200 == 0) {
                     fail = false;
+                    trail = [];
                 }
 
             }
@@ -586,6 +602,7 @@ function draw() {
                 fail = true;
                 water01.isMoving = false;
                 life.loseLife();
+                trail = [];
                 water01.posX = 0;
                 water01.posY = 0;
                 water01.time = 0;
@@ -627,6 +644,7 @@ function draw() {
                 water01.isMoving = false;
                 fail = false;
                 timer.isRunning = false;
+                trail = [];
             }
 
             if (mouseX >= 739 && mouseX <= 739 + 175 && mouseY >= 646 && mouseY <= 646 + 37.46) {
@@ -682,6 +700,7 @@ function draw() {
                 water02.isMoving = false;
                 fail = false;
                 timer.isRunning = false;
+                trail = [];
             }
 
             // Lose by wasting water
@@ -693,6 +712,7 @@ function draw() {
                 prevScreen = 7;
                 currentScreen = 14;
                 timer.isRunning = false;
+                trail = [];
             }
 
 
@@ -700,6 +720,15 @@ function draw() {
 
             water02.paint();
             water02.calculateAngle(inputsArray[1].value, 9, 10);
+
+            // Water trail
+            if(water02.isMoving) {
+                trail.push(new Particle(water02.posX, water02.posY, water02.width, water02.height));
+            }
+
+            for(let i = 0; i < trail.length; i++) {
+                trail[i].paint();
+            }
 
 
             // Collision
@@ -721,7 +750,7 @@ function draw() {
 
                 if (frameCount % 200 == 0) {
                     life.resetLife();
-
+                    trail = [];
                     timer.total += 300 - timer.seconds;
 
                     // Score
@@ -749,6 +778,7 @@ function draw() {
                 textSize(60);
                 text("¡Fallaste!", 150, 350);
                 if (frameCount % 200 == 0) {
+                    trail = [];
                     fail = false;
                 }
             }
@@ -758,6 +788,7 @@ function draw() {
                 fail = true;
                 water02.isMoving = false;
                 life.loseLife();
+                trail = [];
                 water02.posX = 0;
                 water02.posY = 0;
                 water02.time = 0;
@@ -799,6 +830,7 @@ function draw() {
                 water02.isMoving = false;
                 fail = false;
                 timer.isRunning = false;
+                trail = [];
             }
 
             // Cursor
@@ -855,6 +887,7 @@ function draw() {
                 water03.isMoving = false;
                 fail = false;
                 timer.isRunning = false;
+                trail = [];
             }
 
             // Lose by wasting water
@@ -866,6 +899,7 @@ function draw() {
                 prevScreen = 9;
                 currentScreen = 14;
                 timer.isRunning = false;
+                trail = [];
             }
 
 
@@ -875,8 +909,17 @@ function draw() {
             water03.paint();
             water03.calculateInititalV(inputsArray[2].value);
 
-            image(fireman, -218, 420);
+            // Water trail
+            if(water03.isMoving) {
+                trail.push(new Particle(water03.posX, water03.posY, water03.width, water03.height));
+            }
 
+            for(let i = 0; i < trail.length; i++) {
+                trail[i].paint();
+            }
+
+
+            image(fireman, -218, 420);
 
             // Collision
             if (water03.posX >= fire03.posX && water03.posX <= fire03.posX + fire03.width &&
@@ -897,7 +940,7 @@ function draw() {
 
                 if (frameCount % 200 == 0) {
                     life.resetLife();
-
+                    trail = [];
                     timer.total += 300 - timer.seconds;
 
                     // Score
@@ -926,6 +969,7 @@ function draw() {
                 text("¡Fallaste!", 150, 350);
                 if (frameCount % 200 == 0) {
                     fail = false;
+                    trail = [];
                 }
 
             }
@@ -934,6 +978,7 @@ function draw() {
             if (water03.posX > width || water03.posY > height) {
                 fail = true;
                 water03.isMoving = false;
+                trail = [];
                 life.loseLife();
                 water03.posX = 0;
                 water03.posY = 0;
@@ -970,6 +1015,7 @@ function draw() {
             // Lose by time
             if (timer.minutes == 0 && timer.tens == 0 && timer.unities == 0) {
                 timer.resetTime(5, 0, 0);
+                trail = [];
                 life.resetLife();
                 timer.total += 300;
                 prevScreen = 9;
@@ -1026,6 +1072,7 @@ function draw() {
                 water04.isMoving = false;
                 fail = false;
                 timer.isRunning = false;
+                trail = [];
             }
 
             // Lose by wasting water
@@ -1037,6 +1084,7 @@ function draw() {
                 prevScreen = 11;
                 currentScreen = 14;
                 timer.isRunning = false;
+                trail = [];
             }
 
             // Fire
@@ -1044,6 +1092,16 @@ function draw() {
 
             water04.paint();
             water04.calculateAngle(inputsArray[3].value, 10, 12);
+
+            // Water trail
+            if(water04.isMoving) {
+                trail.push(new Particle(water04.posX, water04.posY, water04.width, water04.height));
+            }
+
+            for(let i = 0; i < trail.length; i++) {
+                trail[i].paint();
+            }
+            
 
             // Text problem
             noStroke();
@@ -1074,7 +1132,7 @@ function draw() {
 
                 if (frameCount % 200 == 0) {
                     life.resetLife();
-
+                    trail = [];
                     timer.total += 300 - timer.seconds;
 
                     // Score
@@ -1103,6 +1161,7 @@ function draw() {
                 text("¡Fallaste!", 150, 350);
                 if (frameCount % 200 == 0) {
                     fail = false;
+                    trail = [];
                 }
 
             }
@@ -1115,6 +1174,7 @@ function draw() {
                 water04.posX = 0;
                 water04.posY = 0;
                 water04.time = 0;
+                trail = [];
             }
 
 
@@ -1154,6 +1214,7 @@ function draw() {
                 water04.isMoving = false;
                 fail = false;
                 timer.isRunning = false;
+                trail = [];
             }
 
             // Cursor
