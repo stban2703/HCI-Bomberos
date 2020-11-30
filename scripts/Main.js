@@ -158,7 +158,7 @@ function setup() {
     completedLevels = 0;
     isBlocked = true;
     timer = new Timer(806, 30, regularFont, 20, 5, 0, 0, 300);
-    score = new Score(450, 30, regularFont, 20, 52);
+    score = new Score(450, 30, regularFont, 20, 0);
     win = false;
     fail = false;
     width = 1024;
@@ -279,20 +279,30 @@ function draw() {
             // Pintar lista
             for (let i = 0; i < 5; i++) {
                 let elem = sortedArray[i];
-                // Name
-                fill(255);
-                textSize(20);
-                textAlign(LEFT, BASELINE);
-                textFont(regularFont);
-                text(elem.name.slice(0, elem.name.indexOf(" ", elem.name.indexOf(" ") + 1)), 127, 244 + (85 * i));
 
-                // Time
-                textAlign(CENTER, CENTER);
-                text(parseFloat(elem.time), 415, (244 - 10) + (85 * i));
+                if (elem) {
+                    // Name
+                    fill(255);
+                    textSize(20);
+                    textAlign(LEFT, BASELINE);
+                    textFont(regularFont);
+                    let nameArray = elem.name.split(" ");
 
-                text(parseFloat(elem.totalScore), 645, (244 - 10) + (85 * i));
+                    if (nameArray[1]) {
+                        text(nameArray[0] + " " + nameArray[1], 127, 244 + (85 * i));
+                    } else {
+                        text(nameArray[0], 127, 244 + (85 * i));
+                    }
+                    //text(elem.name.slice(0, elem.name.indexOf(" ", elem.name.indexOf(" ") + 1)), 127, 244 + (85 * i));
 
-                textAlign(LEFT, BASELINE)
+                    // Time
+                    textAlign(CENTER, CENTER);
+                    text(parseFloat(elem.time), 415, (244 - 10) + (85 * i));
+
+                    text(parseFloat(elem.totalScore), 645, (244 - 10) + (85 * i));
+
+                    textAlign(LEFT, BASELINE)
+                }
             }
 
             // Mouse
@@ -598,11 +608,11 @@ function draw() {
 
                     // Score
                     score.addScore(23)
-                    if (timer.minutes >= 2 && timer.tens >= 3 && timer.unities >= 0) {
+                    if (timer.seconds >= 150) {
                         score.addScore(14);
-                    } else if (timer.seconds <= 150 && timer.seconds > 60) {
+                    } else if (timer.seconds < 150 && timer.seconds >= 60) {
                         score.addScore(7);
-                    } else if (timer.minutes < 1) {
+                    } else if (timer.seconds < 60) {
                         score.addScore(4);
                     }
 
@@ -785,11 +795,11 @@ function draw() {
 
                     // Score
                     score.addScore(23)
-                    if (timer.minutes >= 2 && timer.tens >= 3 && timer.unities >= 0) {
+                    if (timer.seconds >= 150) {
                         score.addScore(14);
-                    } else if (timer.seconds <= 150 && timer.seconds > 60) {
+                    } else if (timer.seconds < 150 && timer.seconds >= 60) {
                         score.addScore(7);
-                    } else if (timer.minutes < 1) {
+                    } else if (timer.seconds < 60) {
                         score.addScore(4);
                     }
 
@@ -975,11 +985,11 @@ function draw() {
 
                     // Score
                     score.addScore(23)
-                    if (timer.minutes >= 2 && timer.tens >= 3 && timer.unities >= 0) {
+                    if (timer.seconds >= 150) {
                         score.addScore(14);
-                    } else if (timer.seconds <= 150 && timer.seconds > 60) {
+                    } else if (timer.seconds < 150 && timer.seconds >= 60) {
                         score.addScore(7);
-                    } else if (timer.minutes < 1) {
+                    } else if (timer.seconds < 60) {
                         score.addScore(4);
                     }
 
@@ -1167,11 +1177,11 @@ function draw() {
 
                     // Score
                     score.addScore(23)
-                    if (timer.minutes >= 2 && timer.tens >= 3 && timer.unities >= 0) {
+                    if (timer.seconds >= 150) {
                         score.addScore(14);
-                    } else if (timer.seconds <= 150 && timer.seconds > 60) {
+                    } else if (timer.seconds < 150 && timer.seconds >= 60) {
                         score.addScore(7);
-                    } else if (timer.minutes < 1) {
+                    } else if (timer.seconds < 60) {
                         score.addScore(4);
                     }
 
@@ -1427,15 +1437,18 @@ function draw() {
             }
             break;
     }
+
+    console.log(timer.seconds)
 }
 
 function mousePressed() {
+    //console.log(score.value);
     // Check dX and dY
     /*console.log("X: " + (this.water04.posX - this.water04.initialX) / 100)
     console.log("Y: " + (this.water04.posY - this.water04.initialY) / 100)*/
     switch (currentScreen) {
         case -9:
-            if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && mouseIsPressed && completedLevels < 1) {
+            if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && completedLevels < 1) {
                 completedLevels = 1;
                 isBlocked = false;
                 userRef.doc(currentUser.id).update({
@@ -1449,7 +1462,7 @@ function mousePressed() {
                     console.log("Actualizado");
                     currentUser.freefallScore = 50;
                 });
-            } else if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && mouseIsPressed && completedLevels >= 1) {
+            } else if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && completedLevels >= 1) {
                 currentScreen = 17;
                 console.log("Otra vez");
             }
@@ -1530,25 +1543,25 @@ function mousePressed() {
 
         case -3:
             // Tutorial caida libre 2
-            if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && mouseIsPressed) {
+            if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47) {
                 currentScreen = -9;
             }
             break;
 
         case -2:
             // Tutorial caida libre 1
-            if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && mouseIsPressed) {
+            if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47) {
                 currentScreen = -3;
             }
             break;
 
         case -1:
             // Introduccion
-            if (mouseX >= 390 && mouseX <= 390 + 277 && mouseY >= 405 && mouseY <= 405 + 59 && mouseIsPressed) {
+            if (mouseX >= 390 && mouseX <= 390 + 277 && mouseY >= 405 && mouseY <= 405 + 59) {
                 currentScreen = 0;
             }
 
-            if (mouseX >= 390 && mouseX <= 390 + 277 && mouseY >= 490 && mouseY <= 490 + 59 && mouseIsPressed) {
+            if (mouseX >= 390 && mouseX <= 390 + 277 && mouseY >= 490 && mouseY <= 490 + 59) {
                 userRef.get().then(function (querySnapshot) {
                     querySnapshot.forEach(function (elem) {
                         const obj = elem.data();
@@ -1593,7 +1606,7 @@ function mousePressed() {
             // REGISTRO
             if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48 && inputsArray[5].value.length > 0) {
                 let newUser = {
-                    id: inputsArray[5].value.toLowerCase().replace(" ", ""),
+                    id: inputsArray[5].value.toLowerCase().replace(/\s/g, ""),
                     name: inputsArray[5].value,
                     completedLevels: 0,
                     parabolicScore: 0,
