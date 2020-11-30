@@ -2,6 +2,7 @@ let logic;
 let prevScreen;
 let currentScreen;
 let currentInstructScreen;
+let currentTutorialFfScreen;
 let currentUser;
 let userTime;
 let timer;
@@ -34,12 +35,18 @@ let animationArray;
 let screenlevelone1;
 let screenlevelone2;
 let screenlevelone3;
+let freefallpng1;
+let freefallpng2;
+let freefallpng3;
+let freefallpng4;
+let freefallpng5;
 
 // Tutorial animacion parabolico
 let screentutorialparabolic1;
 let screentutorialparabolic2;
 let screentutorialparabolic3;
 
+// Instrucciones
 let screeninstruction1;
 let screeninstruction2;
 let screeninstruction3;
@@ -113,13 +120,20 @@ function preload() {
     // Tutorial caida libre
     //screenlevelone1 = loadImage("../src/img/tutorialcaidalibre.jpg");
     //screenlevelone2 = loadImage("../src/img/tutorialcaidalibre2.jpg");
-    screenlevelone3 = loadImage("./src/img/tutocaidalibre3.png")
+    screenlevelone3 = loadImage("./src/img/tutocaidalibre3.png");
+
+    freefallpng1 = loadImage("./src/img/caidalibrepng1.png");
+    freefallpng2 = loadImage("./src/img/caidalibrepng2.png");
+    freefallpng3 = loadImage("./src/img/caidalibrepng3.png");
+    freefallpng4 = loadImage("./src/img/caidalibrepng4.png");
+    freefallpng5 = loadImage("./src/img/caidalibrepng5.png");
 
     // Tutorial movmiento parabolico
     //screentutorialparabolic1 = loadImage("./src/img/tutorialparabolico1.jpg");
     //screentutorialparabolic2 = loadImage("./src/img/tutorialparabolico2.jpg");
     screentutorialparabolic3 = loadImage("./src/img/tutorialparabolico3.jpg");
 
+    // Instrucciones
     screeninstruction1 = loadImage("./src/img/parabolicoinstrucciones1.jpg");
     screeninstruction2 = loadImage("./src/img/parabolicoinstrucciones2.jpg");
     screeninstruction3 = loadImage("./src/img/parabolicoinstrucciones3.jpg");
@@ -153,7 +167,10 @@ function setup() {
     trail = [];
     prevScreen = 0;
     currentScreen = -1;
+
     currentInstructScreen = 0;
+    currentTutorialFfScreen = 0;
+
     totalfireOver = 0;
     completedLevels = 0;
     isBlocked = true;
@@ -247,9 +264,42 @@ function draw() {
     switch (currentScreen) {
         case -9:
             // Tutorial caida libre 3
+            //currentTutorialFfScreen = 4;
             animationArray[0].style.display = "none";
             animationArray[1].style.display = "none";
             image(screenlevelone3, 0, 0);
+
+            switch (currentTutorialFfScreen) {
+                case 0:
+                    image(freefallpng1, 206, 126);
+                    break;
+
+                case 1:
+                    image(freefallpng1, 206, 126);
+                    image(freefallpng2, 206, 206);
+                    break;
+
+                case 2:
+                    image(freefallpng1, 206, 126);
+                    image(freefallpng2, 206, 206);
+                    image(freefallpng3, 206, 286);
+                    break;
+
+                case 3:
+                    image(freefallpng1, 206, 126);
+                    image(freefallpng2, 206, 206);
+                    image(freefallpng3, 206, 286);
+                    image(freefallpng4, 206, 366);
+                    break;
+
+                case 4:
+                    image(freefallpng1, 206, 126);
+                    image(freefallpng2, 206, 206);
+                    image(freefallpng3, 206, 286);
+                    image(freefallpng4, 206, 366);
+                    image(freefallpng5, 206, 426);
+                    break;
+            }
 
             if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47) {
                 cursor(HAND);
@@ -494,6 +544,7 @@ function draw() {
             }
             break;
         case 4:
+            // Tutorial parabolico 3
             image(screentutorialparabolic3, 0, 0);
             animationArray[0].style.display = "none";
             animationArray[1].style.display = "none";
@@ -1437,8 +1488,6 @@ function draw() {
             }
             break;
     }
-
-    console.log(timer.seconds)
 }
 
 function mousePressed() {
@@ -1448,23 +1497,54 @@ function mousePressed() {
     console.log("Y: " + (this.water04.posY - this.water04.initialY) / 100)*/
     switch (currentScreen) {
         case -9:
-            if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && completedLevels < 1) {
-                completedLevels = 1;
-                isBlocked = false;
-                userRef.doc(currentUser.id).update({
-                    completedLevels: 1,
-                    freefallScore: 50,
-                    totalScore: 50
+            switch (currentTutorialFfScreen) {
+                case 0:
+                    if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47) {
+                        currentTutorialFfScreen = 1;
+                    }
+                    break;
 
-                }).then(function () {
-                    completedLevels = 1;
-                    currentScreen = 17;
-                    console.log("Actualizado");
-                    currentUser.freefallScore = 50;
-                });
-            } else if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && completedLevels >= 1) {
-                currentScreen = 17;
-                console.log("Otra vez");
+                case 1:
+                    if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47) {
+                        currentTutorialFfScreen = 2;
+                    }
+                    break;
+
+                case 2:
+                    if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47) {
+                        currentTutorialFfScreen = 3;
+                    }
+                    break;
+
+                case 3:
+                    if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47) {
+                        currentTutorialFfScreen = 4;
+                    }
+                    break;
+
+                case 4:
+                    //currentTutorialFfScreen
+                    if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && completedLevels < 1) {
+                        completedLevels = 1;
+                        isBlocked = false;
+                        userRef.doc(currentUser.id).update({
+                            completedLevels: 1,
+                            freefallScore: 50,
+                            totalScore: 50
+
+                        }).then(function () {
+                            currentTutorialFfScreen = 0;
+                            completedLevels = 1;
+                            currentScreen = 17;
+                            console.log("Actualizado");
+                            currentUser.freefallScore = 50;
+                        });
+                    } else if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && completedLevels >= 1) {
+                        currentTutorialFfScreen = 0;
+                        currentScreen = 17;
+                        console.log("Otra vez");
+                    }
+                    break;
             }
             break;
 
@@ -1524,14 +1604,6 @@ function mousePressed() {
                         currentScreen = -6;
                     }
                     break;
-
-                /*case 5:
-                    // Instruccion movimiento parabolico 6
-                    // Cursor
-                    if (mouseX >= 760 && mouseX <= 760 + 175 && mouseY >= 612 && mouseY <= 612 + 37.46) {
-                        currentScreen = -6;
-                    }
-                    break;*/
             }
             break;
 
@@ -1643,16 +1715,19 @@ function mousePressed() {
             }
             break;
         case 2:
+            // Tutorial parabolico 1
             if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.46) {
                 currentScreen = 3;
             }
             break;
         case 3:
+             // Tutorial parabolico 1
             if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.46) {
                 currentScreen = 4;
             }
             break;
         case 4:
+             // Tutorial parabolico 1
             if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.46 && completedLevels < 2) {
                 score.value += 52;
                 currentScreen = -4;
@@ -1895,7 +1970,6 @@ function mousePressed() {
             break;
     }
 }
-
 
 function calculateFinalTime() {
 
