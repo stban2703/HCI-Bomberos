@@ -13,11 +13,15 @@ let userId;
 let width = 1024;
 let height = 700;
 
+// Top array
+let topArray;
+
 // Ingame
 let stroke;
 let screenintro;
 let screenlogin;
 let screenregister;
+let screentop;
 
 // Map
 let map1;
@@ -84,9 +88,11 @@ let button01;
 function preload() {
     stroke = loadImage("../src/img/stroke.png");
 
+    // Inicio
     screenlogin = loadImage("../src/img/login.jpg");
     screenregister = loadImage("../src/img/registro.jpg")
     screenintro = loadImage("../src/img/introduccion.jpg");
+    screentop = loadImage("../src/img/topjugadores.jpg");
 
     // Mapa
     map1 = loadImage("../src/img/mapa1.jpg");
@@ -138,6 +144,9 @@ function setup() {
     fail = false;
     width = 1024;
     height = 700;
+
+    // Top array
+    topArray = [];
 
     createCanvas(width, height);
 
@@ -195,6 +204,51 @@ function setup() {
 
 function draw() {
     switch (currentScreen) {
+        case -8:
+            // TOP SCREEN
+            image(screentop, 0, 0);
+
+            let sortedArray = topArray.sort(function (a, b) {
+                var scoreA = a.totalScore;
+                var scoreB = b.totalScore;
+                var timeA = parseFloat(a.time);
+                var timeB = parseFloat(b.time);
+
+                // Compare the 2 keys
+                if (scoreA < scoreB) return 1;
+                if (scoreA > scoreB) return -1;
+                if (timeA < timeB) return -1;
+                if (timeA > timeB) return 1;
+                return 0;
+            });
+
+            // Pintar lista
+            for (let i = 0; i < 5; i++) {
+                let elem = sortedArray[i];
+                // Name
+                fill(255);
+                textSize(20);
+                textAlign(LEFT, BASELINE);
+                textFont(regularFont);
+                text(elem.name.slice(0, elem.name.indexOf(" ", elem.name.indexOf(" ") + 1)), 127, 244 + (85 * i));
+
+                // Time
+                textAlign(CENTER, CENTER);
+                text(parseFloat(elem.time), 415, (244 - 10) + (85 * i));
+
+                text(parseFloat(elem.totalScore), 645, (244 - 10) + (85 * i));
+
+                textAlign(LEFT, BASELINE)
+            }
+
+            // Mouse
+            if (mouseX >= 18 && mouseX <= 18 + 69 && mouseY >= 44 && mouseY <= 44 + 57) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
+            break;
+
         case -7:
             // MAPA 2
             if (totalfireOver >= 3) {
@@ -220,6 +274,7 @@ function draw() {
             break;
 
         case -5:
+            // Tutorial movimiento parabolico 2
             image(screeninstruction2, 0, 0);
             // Cursor
             if (mouseX >= 751 && mouseX <= 751 + 175 && mouseY >= 430 && mouseY <= 430 + 37.46) {
@@ -230,6 +285,7 @@ function draw() {
             break;
 
         case -4:
+            // Tutorial movimiento parabolico 1
             image(screeninstruction1, 0, 0);
             // Cursor
             if (mouseX >= 760 && mouseX <= 760 + 175 && mouseY >= 612 && mouseY <= 612 + 37.46) {
@@ -240,6 +296,7 @@ function draw() {
             break;
 
         case -3:
+            // Tutorial caida libre 2
             image(screenlevelone2, 0, 0);
             if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47) {
                 cursor(HAND);
@@ -250,6 +307,7 @@ function draw() {
             break;
 
         case -2:
+            // Tutorial caida libre 1
             image(screenlevelone1, 0, 0);
 
             if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47) {
@@ -260,6 +318,7 @@ function draw() {
             break;
 
         case -1:
+            // Introduccion
             image(screenintro, 0, 0);
             inputsArray[0].style.display = "none";
             inputsArray[1].style.display = "none";
@@ -275,17 +334,8 @@ function draw() {
             } else {
                 cursor(ARROW);
             }
-
-            if (mouseX >= 390 && mouseX <= 390 + 277 && mouseY >= 405 && mouseY <= 405 + 59 && mouseIsPressed) {
-                currentScreen = 0;
-            }
-
-            if (mouseX >= 390 && mouseX <= 390 + 277 && mouseY >= 490 && mouseY <= 490 + 59 && mouseIsPressed) {
-                //currentScreen = 0;
-                alert("Very soon")
-            }
-
             break;
+
         case 0:
             image(screenlogin, 0, 0);
             inputsArray[0].style.display = "none";
@@ -1231,6 +1281,14 @@ function mousePressed() {
     /*console.log("X: " + (this.water04.posX - this.water04.initialX) / 100)
     console.log("Y: " + (this.water04.posY - this.water04.initialY) / 100)*/
     switch (currentScreen) {
+        case -8:
+            // TOP
+            if (mouseX >= 18 && mouseX <= 18 + 69 && mouseY >= 44 && mouseY <= 44 + 57) {
+                currentScreen = -1;
+                topArray = [];
+            }
+            break;
+
         case -7:
             // MAPA 2
             if (mouseX >= 718 && mouseX <= 718 + 175 && mouseY >= 615 && mouseY <= 615 + 37.46) {
@@ -1245,6 +1303,7 @@ function mousePressed() {
             break;
 
         case -5:
+            // 
             if (mouseX >= 751 && mouseX <= 751 + 175 && mouseY >= 430 && mouseY <= 430 + 37.46) {
                 currentScreen = -6;
             }
@@ -1257,12 +1316,14 @@ function mousePressed() {
             break;
 
         case -3:
+            // Tutorial caida libre
             if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && mouseIsPressed && completedLevels < 1) {
                 completedLevels = 1;
                 isBlocked = false;
                 userRef.doc(currentUser.id).update({
                     completedLevels: 1,
-                    freefallScore: 50
+                    freefallScore: 50,
+                    totalScore: 50
 
                 }).then(function () {
                     completedLevels = 1;
@@ -1281,6 +1342,26 @@ function mousePressed() {
                 currentScreen = -3;
             }
             break;
+
+        case -1:
+            // Introduccion
+            if (mouseX >= 390 && mouseX <= 390 + 277 && mouseY >= 405 && mouseY <= 405 + 59 && mouseIsPressed) {
+                currentScreen = 0;
+            }
+
+            if (mouseX >= 390 && mouseX <= 390 + 277 && mouseY >= 490 && mouseY <= 490 + 59 && mouseIsPressed) {
+                userRef.get().then(function (querySnapshot) {
+                    querySnapshot.forEach(function (elem) {
+                        const obj = elem.data();
+                        obj.id = elem.id;
+                        topArray.push(obj);
+                    });
+                    console.log(topArray.length);
+                    currentScreen = -8;
+                });
+            }
+            break;
+
         case 0:
             // LOGIN
             if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48 && inputsArray[4].value.length > 0) {
@@ -1315,7 +1396,11 @@ function mousePressed() {
                 let newUser = {
                     id: inputsArray[5].value.toLowerCase().replace(" ", ""),
                     name: inputsArray[5].value,
-                    completedLevels: 0
+                    completedLevels: 0,
+                    parabolicScore: 0,
+                    freefallScore: 0,
+                    totalScore: 0,
+                    time: "0"
                 }
 
                 let user;
@@ -1505,7 +1590,8 @@ function mousePressed() {
                     completedLevels: 2,
                     time: userTime,
                     totalfireOver: totalfireOver,
-                    parabolicScore: score.value
+                    parabolicScore: score.value,
+                    totalScore: 50 + score.value
 
                 }).then(function () {
                     completedLevels = 2;
