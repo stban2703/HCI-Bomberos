@@ -1,6 +1,7 @@
 let logic;
 let prevScreen;
 let currentScreen;
+
 // Transitions
 let currentInstructScreen;
 let currentTutorialFfScreen;
@@ -23,6 +24,8 @@ let height = 700;
 let topArray;
 
 // Ingame
+let maleAvatar;
+let femaleAvatar;
 let stroke;
 let avatarStroke;
 let selectedAvatar;
@@ -120,6 +123,8 @@ let button01;
 function preload() {
     stroke = loadImage("./src/img/stroke.png");
     avatarStroke = loadImage("./src/img/strokeavatar.png");
+    maleAvatar = loadImage("./src/img/male.png");
+    femaleAvatar = loadImage("./src/img/female.png");
 
     // Inicio
     screenlogin = loadImage("./src/img/login.jpg");
@@ -1479,6 +1484,12 @@ function draw() {
                     break;
             }
 
+            if(currentUser.genre == "mujer") {
+                image(femaleAvatar, 925, 21);
+            } else if(currentUser.genre == "hombre") {
+                image(maleAvatar, 925, 21);
+            }
+
             if (completedLevels >= 1) {
                 isBlocked = false;
             }
@@ -1564,7 +1575,7 @@ function draw() {
             inputsArray[3].style.display = "none";
             inputsArray[4].style.display = "none";
             inputsArray[5].style.display = "none";
-            
+
             image(screenAvatar, 0, 0);
             if (selectedAvatar == "mujer") {
                 image(avatarStroke, 312, 238);
@@ -1748,7 +1759,7 @@ function mousePressed() {
             // LOGIN
             if (mouseX >= 400 && mouseX <= 400 + 224 && mouseY >= 338 && mouseY <= 338 + 48 && inputsArray[4].value.length > 0) {
                 let user;
-                let query = userRef.doc(inputsArray[4].value.toLowerCase().replace(" ", ""));
+                let query = userRef.doc(inputsArray[4].value.toLowerCase().replace(/\s/g, ""));
 
                 query.get().then(function (querySnapshot) {
                     user = querySnapshot.data()
