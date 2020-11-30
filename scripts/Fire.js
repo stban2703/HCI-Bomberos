@@ -5,8 +5,8 @@ class Fire {
         this.width = width;
         this.height = height;
         this.isOver = false;
-        this.image = loadImage("../src/img/fuego.png");
-        this.imageSmoke = loadImage("../src/img/humo.png");
+        this.image = loadImage("./src/img/fuego.png");
+        this.imageSmoke = loadImage("./src/img/humo.png");
     }
 
     paint() {

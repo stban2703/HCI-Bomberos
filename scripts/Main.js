@@ -88,51 +88,51 @@ let buttonsArray;
 let button01;
 
 function preload() {
-    stroke = loadImage("../src/img/stroke.png");
+    stroke = loadImage("./src/img/stroke.png");
 
     // Inicio
-    screenlogin = loadImage("../src/img/login.jpg");
-    screenregister = loadImage("../src/img/registro.jpg")
-    screenintro = loadImage("../src/img/introduccion.jpg");
-    screentop = loadImage("../src/img/topjugadores.jpg");
+    screenlogin = loadImage("./src/img/login.jpg");
+    screenregister = loadImage("./src/img/registro.jpg")
+    screenintro = loadImage("./src/img/introduccion.jpg");
+    screentop = loadImage("./src/img/topjugadores.jpg");
 
     // Mapa
-    map1 = loadImage("../src/img/mapa1.jpg");
-    map2 = loadImage("../src/img/mapa2.jpg");
-    map2defeat = loadImage("../src/img/mapa2derrota.jpg");
+    map1 = loadImage("./src/img/mapa1.jpg");
+    map2 = loadImage("./src/img/mapa2.jpg");
+    map2defeat = loadImage("./src/img/mapa2derrota.jpg");
 
     // Tutorial caida libre
     //screenlevelone1 = loadImage("../src/img/tutorialcaidalibre.jpg");
     //screenlevelone2 = loadImage("../src/img/tutorialcaidalibre2.jpg");
-    screenlevelone3 = loadImage("../src/img/tutocaidalibre3.png")
+    screenlevelone3 = loadImage("./src/img/tutocaidalibre3.png")
 
     // Tutorial movmiento parabolico
-    screentutorialparabolic1 = loadImage("../src/img/tutorialparabolico1.jpg");
-    screentutorialparabolic2 = loadImage("../src/img/tutorialparabolico2.jpg");
-    screentutorialparabolic3 = loadImage("../src/img/tutorialparabolico3.jpg");
-    screeninstruction1 = loadImage("../src/img/parabolicoinstrucciones1.jpg");
-    screeninstruction2 = loadImage("../src/img/parabolicoinstrucciones2.jpg");
+    screentutorialparabolic1 = loadImage("./src/img/tutorialparabolico1.jpg");
+    screentutorialparabolic2 = loadImage("./src/img/tutorialparabolico2.jpg");
+    screentutorialparabolic3 = loadImage("./src/img/tutorialparabolico3.jpg");
+    screeninstruction1 = loadImage("./src/img/parabolicoinstrucciones1.jpg");
+    screeninstruction2 = loadImage("./src/img/parabolicoinstrucciones2.jpg");
 
     // Juego
-    screengameplay = loadImage("../src/img/screengameplay.jpg");
-    screenWin = loadImage("../src/img/pantallavictoria.jpg");
-    screenLoseWater = loadImage("../src/img/derrotaagua.jpg");
-    screenLoseTime = loadImage("../src/img/derrotatiempo.jpg");
-    screenFinal = loadImage("../src/img/resume.jpg");
-    screenlevels = loadImage("../src/img/nivelescompletados.jpg");
-    screenlevelcomplete1 = loadImage("../src/img/caidalibrecompleto.jpg");
-    screenlevelcomplete2 = loadImage("../src/img/parabolicocompleto.jpg");
+    screengameplay = loadImage("./src/img/screengameplay.jpg");
+    screenWin = loadImage("./src/img/pantallavictoria.jpg");
+    screenLoseWater = loadImage("./src/img/derrotaagua.jpg");
+    screenLoseTime = loadImage("./src/img/derrotatiempo.jpg");
+    screenFinal = loadImage("./src/img/resume.jpg");
+    screenlevels = loadImage("./src/img/nivelescompletados.jpg");
+    screenlevelcomplete1 = loadImage("./src/img/caidalibrecompleto.jpg");
+    screenlevelcomplete2 = loadImage("./src/img/parabolicocompleto.jpg");
 
-    blocked = loadImage("../src/img/bloqueado.jpg");
+    blocked = loadImage("./src/img/bloqueado.jpg");
 
-    graphic01 = loadImage("../src/img/grafica01.png");
-    screenProfile = loadImage("../src/img/perfildummy.jpg")
-    graphic02 = loadImage("../src/img/grafica02.png");
-    graphic03 = loadImage("../src/img/grafica03.png");
-    graphic04 = loadImage("../src/img/grafica04.png");
-    fireman = loadImage("../src/img/bomberos.png");
-    regularFont = loadFont("../src/font/Montserrat-Regular.ttf");
-    boldFont = loadFont("../src/font/Montserrat-Bold.ttf");
+    graphic01 = loadImage("./src/img/grafica01.png");
+    screenProfile = loadImage("./src/img/perfildummy.jpg")
+    graphic02 = loadImage("./src/img/grafica02.png");
+    graphic03 = loadImage("./src/img/grafica03.png");
+    graphic04 = loadImage("./src/img/grafica04.png");
+    fireman = loadImage("./src/img/bomberos.png");
+    regularFont = loadFont("./src/font/Montserrat-Regular.ttf");
+    boldFont = loadFont("./src/font/Montserrat-Bold.ttf");
 }
 
 function setup() {
@@ -206,8 +206,8 @@ function setup() {
 
 
     // Animaciones
-    screenlevelone1 = createImg("../src/animated/tutocaidalibre1.gif");
-    screenlevelone2 = createImg("../src/animated/tutocaidalibre2.gif");
+    screenlevelone1 = createImg("./src/animated/tutocaidalibre1.gif");
+    screenlevelone2 = createImg("./src/animated/tutocaidalibre2.gif");
 
     screenlevelone1.position(0, 0);
     screenlevelone2.position(0, 0);
