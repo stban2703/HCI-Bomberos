@@ -28,9 +28,11 @@ let map1;
 let map2;
 let map2defeat;
 
-// Tutorial caida libre
+// Tutorial caida libre animacion
+let animationArray;
 let screenlevelone1;
 let screenlevelone2;
+let screenlevelone3;
 
 // Tutorial
 let screentutorialparabolic1;
@@ -100,8 +102,9 @@ function preload() {
     map2defeat = loadImage("../src/img/mapa2derrota.jpg");
 
     // Tutorial caida libre
-    screenlevelone1 = loadImage("../src/img/tutorialcaidalibre.jpg");
-    screenlevelone2 = loadImage("../src/img/tutorialcaidalibre2.jpg");
+    //screenlevelone1 = loadImage("../src/img/tutorialcaidalibre.jpg");
+    //screenlevelone2 = loadImage("../src/img/tutorialcaidalibre2.jpg");
+    screenlevelone3 = loadImage("../src/img/tutocaidalibre3.png")
 
     // Tutorial movmiento parabolico
     screentutorialparabolic1 = loadImage("../src/img/tutorialparabolico1.jpg");
@@ -200,10 +203,38 @@ function setup() {
 
     button01.position(384, 230);
     buttonsArray = document.querySelectorAll('button');
+
+
+    // Animaciones
+    screenlevelone1 = createImg("../src/animated/tutocaidalibre1.gif");
+    screenlevelone2 = createImg("../src/animated/tutocaidalibre2.gif");
+
+    screenlevelone1.position(0, 0);
+    screenlevelone2.position(0, 0);
+
+    // Animation array
+    animationArray = document.querySelectorAll("img");
+
+    animationArray.forEach(function (elem) {
+        elem.style.display = "none";
+    })
 }
 
 function draw() {
     switch (currentScreen) {
+        case -9:
+            // Tutorial caida libre 3
+            animationArray[0].style.display = "none";
+            animationArray[1].style.display = "none";
+            image(screenlevelone3, 0, 0);
+
+            if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47) {
+                cursor(HAND);
+            } else {
+                cursor(ARROW);
+            }
+            break;
+
         case -8:
             // TOP SCREEN
             image(screentop, 0, 0);
@@ -297,7 +328,10 @@ function draw() {
 
         case -3:
             // Tutorial caida libre 2
-            image(screenlevelone2, 0, 0);
+            //image(screenlevelone2, 0, 0);
+            animationArray[0].style.display = "none";
+            animationArray[1].style.display = "block";
+
             if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47) {
                 cursor(HAND);
             } else {
@@ -308,7 +342,9 @@ function draw() {
 
         case -2:
             // Tutorial caida libre 1
-            image(screenlevelone1, 0, 0);
+            //image(screenlevelone1, 0, 0);
+            animationArray[0].style.display = "block";
+            animationArray[1].style.display = "none";
 
             if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47) {
                 cursor(HAND);
@@ -1281,6 +1317,27 @@ function mousePressed() {
     /*console.log("X: " + (this.water04.posX - this.water04.initialX) / 100)
     console.log("Y: " + (this.water04.posY - this.water04.initialY) / 100)*/
     switch (currentScreen) {
+        case -9:
+            if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && mouseIsPressed && completedLevels < 1) {
+                completedLevels = 1;
+                isBlocked = false;
+                userRef.doc(currentUser.id).update({
+                    completedLevels: 1,
+                    freefallScore: 50,
+                    totalScore: 50
+
+                }).then(function () {
+                    completedLevels = 1;
+                    currentScreen = 17;
+                    console.log("Actualizado");
+                    currentUser.freefallScore = 50;
+                });
+            } else if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && mouseIsPressed && completedLevels >= 1) {
+                currentScreen = 17;
+                console.log("Otra vez");
+            }
+            break;
+
         case -8:
             // TOP
             if (mouseX >= 18 && mouseX <= 18 + 69 && mouseY >= 44 && mouseY <= 44 + 57) {
@@ -1316,28 +1373,14 @@ function mousePressed() {
             break;
 
         case -3:
-            // Tutorial caida libre
-            if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && mouseIsPressed && completedLevels < 1) {
-                completedLevels = 1;
-                isBlocked = false;
-                userRef.doc(currentUser.id).update({
-                    completedLevels: 1,
-                    freefallScore: 50,
-                    totalScore: 50
-
-                }).then(function () {
-                    completedLevels = 1;
-                    currentScreen = 17;
-                    console.log("Actualizado");
-                    currentUser.freefallScore = 50;
-                });
-            } else if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && mouseIsPressed && completedLevels >= 1) {
-                currentScreen = 17;
-                console.log("Otra vez");
+            // Tutorial caida libre 2
+            if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && mouseIsPressed) {
+                currentScreen = -9;
             }
             break;
 
         case -2:
+            // Tutorial caida libre 1
             if (mouseX >= 797 && mouseX <= 797 + 175 && mouseY >= 623 && mouseY <= 623 + 37.47 && mouseIsPressed) {
                 currentScreen = -3;
             }
