@@ -603,8 +603,8 @@ function draw() {
                 water01.isMoving = false;
                 life.loseLife();
                 trail = [];
-                water01.posX = 0;
-                water01.posY = 0;
+                water01.posX = -50;
+                water01.posY = -50;
                 water01.time = 0;
             }
 
@@ -789,8 +789,8 @@ function draw() {
                 water02.isMoving = false;
                 life.loseLife();
                 trail = [];
-                water02.posX = 0;
-                water02.posY = 0;
+                water02.posX = -50;
+                water02.posY = -50;
                 water02.time = 0;
             }
 
@@ -980,8 +980,8 @@ function draw() {
                 water03.isMoving = false;
                 trail = [];
                 life.loseLife();
-                water03.posX = 0;
-                water03.posY = 0;
+                water03.posX = -50;
+                water03.posY = -50;
                 water03.time = 0;
             }
 
@@ -1171,8 +1171,8 @@ function draw() {
                 fail = true;
                 water04.isMoving = false;
                 life.loseLife();
-                water04.posX = 0;
-                water04.posY = 0;
+                water04.posX = -50;
+                water04.posY = -50;
                 water04.time = 0;
                 trail = [];
             }
