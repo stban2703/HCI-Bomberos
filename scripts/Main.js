@@ -422,7 +422,8 @@ function draw() {
         case -6:
             // MAPA 1
             image(map1, 0, 0);
-            if (mouseX >= 718 && mouseX <= 718 + 175 && mouseY >= 615 && mouseY <= 615 + 37.46) {
+            if ((mouseX >= 718 && mouseX <= 718 + 175 && mouseY >= 615 && mouseY <= 615 + 37.46)
+            || (mouseX >= 469 && mouseX <= 469 + 153 && mouseY >= 77 && mouseY <= 77 + 183)) {
                 cursor(HAND);
             } else {
                 cursor(ARROW);
@@ -1673,7 +1674,8 @@ function mousePressed() {
             break;
         case -6:
             // MAPA 1
-            if (mouseX >= 718 && mouseX <= 718 + 175 && mouseY >= 615 && mouseY <= 615 + 37.46) {
+            if ((mouseX >= 718 && mouseX <= 718 + 175 && mouseY >= 615 && mouseY <= 615 + 37.46)
+            || (mouseX >= 469 && mouseX <= 469 + 153 && mouseY >= 77 && mouseY <= 77 + 183)) {
                 currentScreen = 5;
             }
             break;
