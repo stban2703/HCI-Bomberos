@@ -26,6 +26,8 @@ let topArray;
 // Ingame
 let maleAvatar;
 let femaleAvatar;
+let maleBig;
+let femaleBig;
 let stroke;
 let avatarStroke;
 let selectedAvatar;
@@ -125,6 +127,8 @@ function preload() {
     avatarStroke = loadImage("./src/img/strokeavatar.png");
     maleAvatar = loadImage("./src/img/male.png");
     femaleAvatar = loadImage("./src/img/female.png");
+    maleBig = loadImage("./src/img/malebig.png");
+    femaleBig = loadImage("./src/img/femalebig.png");
 
     // Inicio
     screenlogin = loadImage("./src/img/login.jpg");
@@ -423,7 +427,7 @@ function draw() {
             // MAPA 1
             image(map1, 0, 0);
             if ((mouseX >= 718 && mouseX <= 718 + 175 && mouseY >= 615 && mouseY <= 615 + 37.46)
-            || (mouseX >= 469 && mouseX <= 469 + 153 && mouseY >= 77 && mouseY <= 77 + 183)) {
+                || (mouseX >= 469 && mouseX <= 469 + 153 && mouseY >= 77 && mouseY <= 77 + 183)) {
                 cursor(HAND);
             } else {
                 cursor(ARROW);
@@ -1485,9 +1489,9 @@ function draw() {
                     break;
             }
 
-            if(currentUser.genre == "mujer") {
+            if (currentUser.genre == "mujer") {
                 image(femaleAvatar, 925, 21);
-            } else if(currentUser.genre == "hombre") {
+            } else if (currentUser.genre == "hombre") {
                 image(maleAvatar, 925, 21);
             }
 
@@ -1526,6 +1530,13 @@ function draw() {
             // Profile
             image(screenProfile, 0, 0);
 
+
+            if (currentUser.genre == "mujer") {
+                image(femaleBig, 843, 64, 128, 128);
+            } else if (currentUser.genre == "hombre") {
+                image(maleBig, 843, 64, 128, 128);
+            }
+
             inputsArray[0].style.display = "none";
             inputsArray[1].style.display = "none";
             inputsArray[2].style.display = "none";
@@ -1541,7 +1552,7 @@ function draw() {
             fill(255);
             textSize(25);
             textFont(regularFont);
-            text("Nombre: " + currentUser.name, width / 2, 150);
+            text(currentUser.name.split(/(\s+)/)[0], 907, 203);
 
             // Points
             textAlign(LEFT, BASELINE)
@@ -1675,7 +1686,7 @@ function mousePressed() {
         case -6:
             // MAPA 1
             if ((mouseX >= 718 && mouseX <= 718 + 175 && mouseY >= 615 && mouseY <= 615 + 37.46)
-            || (mouseX >= 469 && mouseX <= 469 + 153 && mouseY >= 77 && mouseY <= 77 + 183)) {
+                || (mouseX >= 469 && mouseX <= 469 + 153 && mouseY >= 77 && mouseY <= 77 + 183)) {
                 currentScreen = 5;
             }
             break;
