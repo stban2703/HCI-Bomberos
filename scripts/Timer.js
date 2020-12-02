@@ -21,7 +21,7 @@ class Timer {
 
     run() {
 
-        if(frameCount%30 == 0 && this.isRunning) {
+        if(frameCount%60 == 0 && this.isRunning) {
             this.unities--;
             this.seconds--;
         }
