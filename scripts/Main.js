@@ -368,6 +368,10 @@ function draw() {
                 return 0;
             });
 
+            /*sortedArray.forEach(function(elem, i) {
+                console.log(`${i + 1}. Nombre: ${elem.name} | Tiempo: ${elem.time} | Puntaje: ${elem.totalScore}`);
+            });*/
+
             // Pintar lista
             for (let i = 0; i < 5; i++) {
                 let elem = sortedArray[i];
@@ -709,7 +713,7 @@ function draw() {
             fill(255);
             textFont(regularFont);
             textSize(18);
-            text('El bombero tiene una manguera inclinada en 45º y necesita lanzar agua con velocidad inicial para apagar el fuego ubicado en el edificio y tiene un tiempo de 1.79 segundos Calcule el valor de Vo (velocidad inicial). (g= 10 m/s2).', 152, 101, 450);
+            text('El bombero tiene una manguera inclinada en 45º y necesita lanzar agua con velocidad inicial para apagar el fuego ubicado en el edificio y tiene un tiempo de 1.79 segundos Calcule el valor de Vo (velocidad inicial).', 152, 101, 450);
 
             // Bombero
             image(fireman, -34, 420);
@@ -1034,7 +1038,7 @@ function draw() {
             fill(255);
             textFont(regularFont);
             textSize(18);
-            text('El bombero tiene una manguera inclinada en 25º y necesita lanzar agua con velocidad inicial para apagar el fuego ubicado en el edificio y tiene un tiempo de 1.4 segundos Calcule el valor de Vo. (velocidad inicial). (g= 10 m/s2).', 152, 101, 450);
+            text('El bombero tiene una manguera inclinada en 25º y necesita lanzar agua con velocidad inicial para apagar el fuego ubicado en el edificio y tiene un tiempo de 1.4 segundos Calcule el valor de Vo. (velocidad inicial).', 152, 101, 450);
 
             // Life
             life.paint();
