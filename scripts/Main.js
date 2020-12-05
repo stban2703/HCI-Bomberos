@@ -144,8 +144,6 @@ function preload() {
     map2medium = loadImage("./src/img/mapa2medio.jpg");
 
     // Tutorial caida libre
-    //screenlevelone1 = loadImage("../src/img/tutorialcaidalibre.jpg");
-    //screenlevelone2 = loadImage("../src/img/tutorialcaidalibre2.jpg");
     screenlevelone3 = loadImage("./src/img/tutocaidalibre3.png");
     screenlevelone4 = loadImage("./src/img/tutocaidalibre4.png");
 
@@ -161,8 +159,6 @@ function preload() {
     parabolicpng4 = loadImage("./src/img/parabolicopng4.png");
 
     // Tutorial movmiento parabolico
-    //screentutorialparabolic1 = loadImage("./src/img/tutorialparabolico1.jpg");
-    //screentutorialparabolic2 = loadImage("./src/img/tutorialparabolico2.jpg");
     screentutorialparabolic3 = loadImage("./src/img/tutorialparabolico3.jpg");
     screentutorialparabolic4 = loadImage("./src/img/tutorialparabolico4.jpg");
 
