@@ -2109,12 +2109,6 @@ function mousePressed() {
             } else if (mouseX >= 323 && mouseX <= 323 + 189 && mouseY >= 288 && mouseY <= 288 + 189 && isBlocked) {
                 alert("Debes terminar el nivel anterior para seleccionar este.");
             }
-
-            /*if (mouseX >= 318 && mouseX <= 318 + 194 && mouseY >= 280 && mouseY <= 280 + 194 && !isBlocked) {
-                currentScreen = 5;
-            } else if (mouseX >= 318 && mouseX <= 318 + 194 && mouseY >= 280 && mouseY <= 280 + 194 && isBlocked) {
-                alert("Debes terminar el nivel anterior para seleccionar este.")
-            }*/
             break;
 
         case 18:
